@@ -1,0 +1,32 @@
+#!/usr/bin/python
+#Processing script for AMICO NODDI
+
+#Script for testing AMICO implemention of NODDI on Huang pilot data
+import amico;
+amico.core.setup(); # only need this once -- sets up some rot matrices in ~/.dipy
+
+#Load data
+ae=amico.Evaluation("Study01", "Subject01");
+
+#Write the scheme file
+amico.util.fsl2scheme("Study01/Subject01/NODDI_protocol.bval", "Study01/Subject01/NODDI_protocol.bvec")
+
+#Load data
+ae.load_data(dwi_filename="NODDI_DWI.img", scheme_filename="NODDI_protocol.scheme", mask_filename="roi_mask.img", b0_thr=0);
+
+ae.set_model("NODDI");
+ae.generate_kernels(); # only need to be generated once per gradient scheme
+
+ae.load_kernels(); # Will load pre-computed kernels and resample to scheme
+
+#--- Debugging here - RGB ----
+import numpy as np
+
+bvecs = np.loadtxt( "Study01/Subject01/NODDI_protocol.bvec")
+bvals = np.loadtxt( "Study01/Subject01/NODDI_protocol.bval")
+
+#-----------------------------
+
+ae.fit();
+
+ae.save_results();

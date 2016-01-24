@@ -1,0 +1,21 @@
+#!/bin/sh
+
+FSLOUTPUTTYPE=NIFTI_GZ
+
+dwiPrefix=181A_mbDTI_eddy
+numB0Images=2
+
+dwiInfile=$dwiPrefix.nii.gz
+
+doMask_cmd="doMasks $dwiInfile $numB0Images"
+echo $doMask_cmd
+$doMask_cmd
+
+#makeMultiShellBvalsBvecs
+
+#make symbolic links
+ln -s dwi_brain_only.nii.gz NODDI_DWI.nii.gz
+#ln -s bvals_multi.txt bval.txt
+#ln -s bvecs_multi.txt bvec.txt
+ln -s brain_mask.nii.gz mask.nii.gz
+ln -s brain_roi.nii.gz mask_mask.nii.gz

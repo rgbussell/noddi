@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# This is for data where each shell is collected in a different file
+# Put the bvec file into the correct format for input
+# Inputs:
+# bvec.txt [3xN dirs total]
+# bval.txt [1xN dirs total]
+# NODDI_DWI.nii.gz
+# mask.nii.gz brain only image
+# mask_mask.nii.gz binary mask
+
+scriptName=$0:
+
+echo $scriptName called
+
+studyDir=Study01
+
+subDir=$studyDir/Subject01
+
+mkdir -p $studyDir
+mkdir -p $subDir
+
+#make input bvals and bvecs
+cp bval.txt bval.txt_bak
+cp bvec.txt bvec.txt_bak
+
+#merge multiple b-values files
+#echo $scriptName merging DWI files
+#fslmerge -t NODDI_DWI.nii.gz mbDTI_eddy30.nii.gz mbDTI_eddy45.nii.gz mbDTI_eddy60.nii.gz
+
+
+echo $scriptName creating bvec files in NODDI\'s format
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};print $1/norm} END{print "\n"}' bvec.txt > $subDir/NODDI_protocol.bvec
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};;print $2/norm} END{print "\n"}' bvec.txt  >> $subDir/NODDI_protocol.bvec
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};;print $3/norm} END{print "\n"}' bvec.txt   >> $subDir/NODDI_protocol.bvec
+
+echo $scriptName creating bval files in NODDI\'s format
+awk 'BEGIN{ORS=" "}{print}' bval.txt > $subDir/NODDI_protocol.bval
+
+
+
+echo $scriptName making input analyze files
+fslchfiletype ANALYZE mask_mask.nii.gz
+fslchfiletype ANALYZE mask.nii.gz
+fslchfiletype ANALYZE NODDI_DWI.nii.gz
+
+echo $scriptName putting input files in the correct place for noddi
+mv mask_mask.hdr $subDir/roi_mask.hdr
+mv mask_mask.img $subDir/roi_mask.img
+mv mask.hdr $subDir/brain_mask.hdr
+mv mask.img $subDir/brain_mask.img
+mv NODDI_DWI.img NODDI_DWI.hdr $subDir
+
+echo $scriptName exiting
