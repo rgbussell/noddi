@@ -1,0 +1,43 @@
+#!/bin/sh
+
+scriptMsg="prog $0"
+
+prefix=$1 #kentNODDI
+subjNum=$2 #int
+
+
+subjDir=$prefix/Subject$subjNum
+
+affix="_eddy.nii.gz"
+
+studyDir=$prefix #input and output files here
+dwiNiiInfile="$prefix$subjNum$affix"
+
+noddiPreprocCmd="./noddiPreprocScript $dwiNiiInfile $studyDir $subjDir $bvalFn $bvecFn $subjNum"
+
+echo $scriptMsg: study dir is $studyDir
+echo $scriptMsg: subject dir is $subjDir
+echo $scriptMsg: input dwi file is $dwiNiiInfile
+
+if [ ! -f "$dwiNiiInfile" ] ; then
+echo $scriptMsg: $dwiNiiInfile not found -- exiting
+exit
+fi
+
+cd $studyDir
+
+if [ -f NODDI_DWI.hdr ] ; then 
+echo $scriptMsg: NODDI_DWI.hdr exists -- removing it!
+rm NODDI_DWI.hdr
+fi
+
+if [ -f NODDI_DWI.img ] ; then 
+echo $scriptMsg: NODDI_DWI.img exists -- removing it!
+rm NODDI_DWI.img; 
+fi
+
+echo $scriptMsg: noddiPreproc command is $noddiPreprocCmd
+$noddiPreprocCmd
+
+#ln -s  $dwiNiiInfile NODDI_DWI.img
+#mv Study01/Subject01 $prefix$subjNum

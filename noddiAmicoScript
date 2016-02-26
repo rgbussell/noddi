@@ -5,15 +5,22 @@
 # and some compiled c-code beyond the usual afni/fsl installation.
 # History
 # 160122 Written by rgb 
+# 160226 added inputs at time of call to specify input data dir
 
+import sys
+StudyID=sys.argv[1]; #something like "Study01" -- input data dir
+SubjectID=sys.argv[2]; #something like "Subject01" -- input data dir
+SubjectDir=StudyID+"/"+SubjectID+"/";
+print 'SubjectDir is ', SubjectDir;
 import amico;
 amico.core.setup(); # only need this once -- sets up some rot matrices in ~/.dipy
 
 #Load data
-ae=amico.Evaluation("Study01", "Subject01");
+#ae=amico.Evaluation("Study01", "Subject01");
+ae=amico.Evaluation(StudyID, SubjectID);
 
 #Write the scheme file
-amico.util.fsl2scheme("Study01/Subject01/NODDI_protocol.bval", "Study01/Subject01/NODDI_protocol.bvec")
+amico.util.fsl2scheme(SubjectDir+"NODDI_protocol.bval", SubjectDir+"NODDI_protocol.bvec")
 
 #Load data
 ae.load_data(dwi_filename="NODDI_DWI.img", scheme_filename="NODDI_protocol.scheme", mask_filename="roi_mask.img", b0_thr=0);
@@ -25,8 +32,8 @@ ae.load_kernels(); # Will load pre-computed kernels and resample to scheme
 #--- Debugging here - RGB ----
 import numpy as np
 
-bvecs = np.loadtxt( "Study01/Subject01/NODDI_protocol.bvec")
-bvals = np.loadtxt( "Study01/Subject01/NODDI_protocol.bval")
+bvecs = np.loadtxt( SubjectDir+"NODDI_protocol.bvec")
+bvals = np.loadtxt( SubjectDir+"NODDI_protocol.bval")
 
 #-----------------------------
 
