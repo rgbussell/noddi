@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cnt=1
-while [[ $cnt -le 1 ]] ; do
+while [[ $cnt -le 9 ]] ; do
 #echo $cnt
 noddiCmd="./noddiAmicoScript kent Subject$cnt"
 echo "******" running noddi amico analysis: $noddiCmd "******" 
