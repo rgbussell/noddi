@@ -1,0 +1,60 @@
+#!/bin/sh
+#Create a multi-shell bvecs file and bvals file using a single shell as output by getBValsBruker Nov 18 2015 09:21 version
+
+
+numB0=5
+numShells=2
+shell1B=1000
+shell2B=2000
+shellSize=30
+
+singleShellBvecsFile="bvecs_single.txt"
+multiShellBvecsOutFile="bvecs_multi.txt"
+
+singleShellBvalsFile="bvals_single.txt"
+multiShellBvalsOutFile="bvals_multi.txt"
+
+b0DirVec="0.0 0.0 0.0"
+b0Val=0.0
+
+
+rm $multiShellBvecsOutFile 
+rm $multiShellBvalsOutFile 
+
+#add the b0 directions
+cnt=0
+while [[ "$cnt" -lt "$numB0" ]];do
+echo $b0DirVec >> $multiShellBvecsOutFile
+cnt=$(($cnt+1))
+done
+
+#add the shell-interleaved b vectors
+while read line; do
+cnt=0
+while [[ "$cnt" -lt "2" ]];do
+echo $line >> $multiShellBvecsOutFile
+cnt=$(($cnt+1))
+done
+done < $singleShellBvecsFile
+
+
+#****make the bvals files****
+
+#B0 bvals
+cnt=0
+while [[ "$cnt" -lt "$numB0" ]];do
+echo $b0Val >> $multiShellBvalsOutFile
+cnt=$(($cnt+1))
+done
+
+
+#add the shell-interleaved b vectors
+cnt=0
+while [[ "$cnt" -lt "$shellSize" ]];do
+echo $shell1B >> $multiShellBvalsOutFile
+echo $shell2B >> $multiShellBvalsOutFile
+cnt=$(($cnt+1))
+done
+
+#cleanup
+rm bvec.$$
