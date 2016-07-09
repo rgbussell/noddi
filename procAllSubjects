@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cnt=0
+while [[ $cnt -le 9  ]] ; do
+cnt=$((cnt + 1))
+./noddiPreprocScript kent"$cnt"_eddy.nii.gz kent kent/Subject"$cnt" bvals.1D bvecs.1D $cnt
+#echo $cnt
+done

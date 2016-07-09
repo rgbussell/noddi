@@ -1,0 +1,60 @@
+#!/bin/sh
+
+scriptMsg="script $0:"
+
+echo $scriptMsg called
+
+#studyDir=Study01
+#subjDir=$studyDir/Subject01
+
+dwiNiiInfile=$1
+studyDir=$2
+subjDir=$3
+bvalFn=$4
+bvecFn=$5
+subjNum=$6
+
+
+echo $scriptMsg: study dir is $studyDir
+echo $scriptMsg: subject dir is $subjDir
+echo $dwiNiiInfile: input dwi file is $dwiNiiInfile
+
+if [ ! -f "$dwiNiiInfile" ] ; then
+echo $scriptMsg: specified dwi input file $dwiNiiInfile not found, exiting!
+exit
+fi
+
+if [ ! -f "$bvalFn" ] ; then
+echo $scriptMsg: specified bval input file $bvalFn not found, exiting!
+exit
+fi
+
+if [ ! -f "$bvecFn" ] ; then
+echo $scriptMsg: specified bvec input file $bvecFn not found, exiting!
+exit
+fi
+
+
+
+if [ ! -d "$studyDir" ] ; then mkdir -p $studyDir ; fi
+if [ ! -d "$subjDir" ] ; then mkdir -p $subjDir ; fi
+
+#merge multiple b-values files
+#echo $scriptMsg merging DWI files
+#fslmerge -t NODDI_DWI.nii.gz mbDTI_eddy30.nii.gz mbDTI_eddy45.nii.gz mbDTI_eddy60.nii.gz
+
+
+echo $scriptMsg creating bvec files in NODDI\'s format
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};print $1/norm} END{print "\n"}' $bvecFn > $subjDir/NODDI_protocol.bvec
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};;print $2/norm} END{print "\n"}' $bvecFn  >> $subjDir/NODDI_protocol.bvec
+awk 'BEGIN{ORS=" "}{norm=sqrt($1^2+$2^2+$3^2); if (norm==0) {norm=1};;print $3/norm} END{print "\n"}' $bvecFn   >> $subjDir/NODDI_protocol.bvec
+
+echo $scriptMsg creating bval files in NODDI\'s format
+awk 'BEGIN{ORS=" "}{print}' $bvalFn > $subjDir/NODDI_protocol.bval
+
+echo $scriptMsg making input analyze files
+fslchfiletype ANALYZE $subjNum/mask_mask.nii.gz $subjDir/roi_mask
+fslchfiletype ANALYZE $subjNum/mask.nii.gz $subjDir/brain_mask
+fslchfiletype ANALYZE $subjNum/$dwiNiiInfile $subjDir/NODDI_DWI
+
+echo $scriptMsg exiting
