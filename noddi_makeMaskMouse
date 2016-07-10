@@ -4,7 +4,7 @@
 
 dwiNiiInFile=$1
 numB0=$2
-threshPercent=5
+threshPercent=40
 
 FSLOUTPUTTYPE=NIFTI_GZ
 

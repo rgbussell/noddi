@@ -1,12 +1,16 @@
 #!/bin/sh
 
+#Set up the NODDI data to be run in the noddi pipeline
+# Change the bvecs and bvals files format
+# make the subject and study directories
+#convert input nifti files to analyze format
+
 scriptMsg="script $0:"
 
 echo $scriptMsg called
 
 #studyDir=Study01
 #subjDir=$studyDir/Subject01
-
 dwiNiiInfile=$1
 studyDir=$2
 subjDir=$3

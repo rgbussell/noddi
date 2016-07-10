@@ -2,24 +2,28 @@
 #Create a multi-shell bvecs file and bvals file using a single shell as output by getBValsBruker Nov 18 2015 09:21 version
 
 
-numB0=5
-numShells=2
-shell1B=1000
-shell2B=2000
+numB0=$3
+numShells=$4
+shell1B=$5
+shell2B=$6
+if [ $numShells -eq "3" ];then
+shell3B=$7
+fi
+
 shellSize=30
 
-singleShellBvecsFile="bvecs_single.txt"
+singleShellBvecsFile=$1
 multiShellBvecsOutFile="bvecs_multi.txt"
 
-singleShellBvalsFile="bvals_single.txt"
+singleShellBvalsFile=$2
 multiShellBvalsOutFile="bvals_multi.txt"
 
 b0DirVec="0.0 0.0 0.0"
 b0Val=0.0
 
 
-rm $multiShellBvecsOutFile 
-rm $multiShellBvalsOutFile 
+rm -f $multiShellBvecsOutFile 
+rm -f $multiShellBvalsOutFile 
 
 #add the b0 directions
 cnt=0
@@ -31,7 +35,7 @@ done
 #add the shell-interleaved b vectors
 while read line; do
 cnt=0
-while [[ "$cnt" -lt "2" ]];do
+while [[ "$cnt" -lt "$numShells" ]];do
 echo $line >> $multiShellBvecsOutFile
 cnt=$(($cnt+1))
 done
@@ -53,6 +57,9 @@ cnt=0
 while [[ "$cnt" -lt "$shellSize" ]];do
 echo $shell1B >> $multiShellBvalsOutFile
 echo $shell2B >> $multiShellBvalsOutFile
+if [ "$numShells" -eq "3"  ] ;then
+echo $shell3B >> $multiShellBvalsOutFile
+fi
 cnt=$(($cnt+1))
 done
 

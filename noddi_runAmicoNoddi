@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #Script for testing AMICO implemention of NODDI
-# Example: noddiAmicoScript Study01 Subject01
+# Example: noddi_runAmicNoddi Study01 Subject01
 # This script requires AMICO NODDI installation with lots of libraries
 # and some compiled c-code beyond the usual afni/fsl installation.
 # History
