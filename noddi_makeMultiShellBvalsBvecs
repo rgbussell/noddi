@@ -1,6 +1,6 @@
 #!/bin/sh
 #Create a multi-shell bvecs file and bvals file using a single shell as output by getBValsBruker Nov 18 2015 09:21 version
-
+# Example: noddi_makeMultiShellBvalsBvecs bvecs_single bvals_single 5 3 750 1500 2000
 
 numB0=$3
 numShells=$4
@@ -37,6 +37,8 @@ while read line; do
 cnt=0
 while [[ "$cnt" -lt "$numShells" ]];do
 echo $line >> $multiShellBvecsOutFile
+#echo $line
+#echo $singleShellBvecsFile
 cnt=$(($cnt+1))
 done
 done < $singleShellBvecsFile

@@ -3,6 +3,8 @@ function [] = noddi_MakeDWIBrikFromBruker(studyDir, scanNum, procNum, prefix, ou
 addpath(getenv('NIFTI_PATH'));
 addpath(getenv('AFNI_MATLAB_PATH'));
 addpath(getenv('PROCESS7T_PATH'));
+addpath([getenv('PROCESS7T_PATH') '/processing']);
+addpath([getenv('PROCESS7T_PATH') '/physics']);
 
 %addpath('/home/rbussell/matlab/process7T/processing/');
 %addpath('/home/rbussell/matlab/afni_matlab/matlab/');

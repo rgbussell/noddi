@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# getBvalsBruker
+#Usage
+# getBvalsBruker 175
+# where 175 is the scan number and the curdir is one level above 175
+#
+#Input:
+# Scan number which contains a file called 'method' in the Bruker format
+#
+#Output:
+# A list of gradient directions from Bruker Dti method file
+# as a 3-column table of B-direction vectors. The values are read
+# directly from the method file and are not transformed by this
+# script. This script only finds and reorders the values.
+#
+#Robert Bussell, UCSD, CFMRI, November 2015
+
+scanDir=$1
+
+methodFile=$scanDir/method
+
+#echo method file is $methodFile
+
+startString="PVM_DwDir="
+endString="PVM"
+
+# Write a Bruker diffusion directions list from a copy/pasted DwDir param field 
+
+#Get bvals from method file
+
+grep $startString $methodFile -m1 -A1000 \
+| grep -v $startString \
+| grep $endString -m1 -B1000 \
+| grep -v $endString \
+| tr '\n' ' ' \
+| tr ' ' '\n' \
+| sed '/^$/d' \
+| awk '
+BEGIN{ORS="";endStr="";cnt=0;}
+{endStr="";cnt=cnt+1;if (cnt==3) {endStr="\n";cnt=0}}
+{print $1, endStr;}'
