@@ -28,7 +28,7 @@ RUN apt-get install -y python-scipy
 
 #Set up nipy and dipy
 RUN apt-get install -y nipy-suite
-RUN apt-get install -y dipy-suite
+RUN apt-get install -y python-dipy
 
 
 # NODDI specific stuff here
@@ -38,8 +38,7 @@ RUN wget http://spams-devel.gforge.inria.fr/hitcounter2.php?file=33816/spams-pyt
 RUN mv hitcounter2.php?file=33816%2Fspams-python-v2.5-svn2014-07-04.tar.gz spams-python-v2.5-svn2014-07-04.tar.gz
 RUN gunzip spams-python-v2.5-svn2014-07-04.tar.gz 
 RUN tar xvf spams-python-v2.5-svn2014-07-04.tar
-RUN cd spams-python
-RUN python setup.py build
+RUN cd spams-python && python setup.py build
 #RUN python setup.py install --prefix=/usr/local/
 
 #install the AMICO python libraries
