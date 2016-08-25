@@ -70,5 +70,12 @@ ENV PATH /usr/local/bin/camino/bin:${PATH}
 COPY AMICO-master AMICO-master 
 RUN cd AMICO-master/python && pip install .
 
+
+#set up fsl
+RUN apt-get install -y fsl-core
+
+#set up afni
+RUN apt-get install -y afni
+
 ENTRYPOINT /bin/bash
 
