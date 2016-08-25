@@ -1,0 +1,8 @@
+#!/bin/bash
+# set up user accounts
+
+groupname=cfmriguest
+username=cfmriguest
+
+groupadd $groupname
+useradd $username --home /home/$username --gid $groupname --create-home --shell=/bin/bash
