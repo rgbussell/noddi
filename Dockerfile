@@ -96,4 +96,4 @@ VOLUME /home/cfmriguest/data
 
 RUN cd
 
-ENTRYPOINT cd $HOME && /bin/bash
+ENTRYPOINT cd $HOME && /bin/bash 

@@ -19,6 +19,7 @@ mask_mask.nii.gz
 mask.nii.gz
 
 4. Create the container
+
 docker run -it --name container1 -v /Users/rbussell/data/noddidata/:/tempdata noddi 
 
 5. Processing your data following the instructions given
