@@ -6,7 +6,10 @@ Note: You have to have docker set up on your system to do this.
 Change to the directory that contains the file called Dockerfile in directory ../something/noddi/ supplied by CFMRI.
 
 2. Create the docker image (this may take some time, but only needs to be done once per system
-docker build -t noddi .
+
+Change directory "noddi" and issue the following command in a terminal:
+
+>> noddi_buildNoddiContainer
 
 3. Set up your BRUKER data files in a common directory following the naming convention specified here:
 b0_only.nii.gz
@@ -25,3 +28,4 @@ docker run -it --name container1 -v /Users/rbussell/data/noddidata/:/tempdata no
 5. Processing your data following the instructions given
 
 docker rm -v container1
+
