@@ -1,3 +1,11 @@
 #!/bin/bash
-docker run -it --name container1 --rm -v /home/cfmriuser/data:/tempdata --name noddi
 
+#Sort out host and container file location
+hostCurDir=`pwd`
+contUserName=cfmriguest
+contHome=/home/$contUserName
+contDataDir=$contHome/data/
+
+echo docker run -it --name container1 --rm -v $hostCurDir/:$contDataDir noddi
+
+#docker run -it --name container1 --rm -v /home/rbussell/data/noddidata/:/home/cfmriguest/data noddi
