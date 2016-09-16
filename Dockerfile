@@ -74,7 +74,7 @@ RUN cd AMICO-master/python && pip install .
 RUN apt-get install -y fsl-core
 
 #set up afni
-RUN apt-get install -y afni
+#RUN apt-get install -y afni
 
 #Import the noddi code from the local directory
 COPY noddi_* ./noddiscripts/
@@ -95,5 +95,7 @@ RUN cd && mkdir data
 VOLUME /home/cfmriguest/data
 
 RUN cd
+
+RUN echo "hello from noddi container"
 
 ENTRYPOINT cd $HOME && /bin/bash 

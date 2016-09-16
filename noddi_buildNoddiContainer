@@ -1,0 +1,19 @@
+#!/bin/sh
+
+sptMsg="$0: "
+logFn=dockerBuild.log
+
+echo $sptMsg "called..." | tee $logFn
+echo $sptMsg " log file is $logFn" | tee -a $logFn
+
+if [[ ! -f "./Dockerfile" ]];then
+ echo $sptMsg "ERROR: Dockerfile does not exist in this directory." | tee -a $logFn
+ exit
+fi
+
+echo $sptMsg " building a processing environment for noddi..." | tee -a $logFn
+echo $sptMsg " ***You only need to run this script once!***" | tee -a $logFn
+
+docker build -t noddi .  | tee -a $logFn
+
+lastLogMsg=`tail -1 $logFn`

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sptMsg="$0: "
+
+echo $sptMsg hello from container

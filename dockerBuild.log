@@ -1,0 +1,197 @@
+./noddi_buildNoddiContainer: called...
+./noddi_buildNoddiContainer:  log file is dockerBuild.log
+./noddi_buildNoddiContainer:  building a processing environment for noddi...
+./noddi_buildNoddiContainer:  ***You only need to run this script once!***
+Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.52 MBSending build context to Docker daemon 34.52 MB
+Step 1 : FROM debian:jessie
+ ---> 1b01529cc499
+Step 2 : ENV DEBIAN_FRONTEND noninteractive
+ ---> Using cache
+ ---> 41539165ddd1
+Step 3 : RUN apt-get -y update
+ ---> Using cache
+ ---> a76e389c40b0
+Step 4 : RUN apt-get install -y apt-utils
+ ---> Using cache
+ ---> 77060a774cd7
+Step 5 : RUN apt-get install -y wget
+ ---> Using cache
+ ---> 8fd700d81990
+Step 6 : RUN wget -O- http://neuro.debian.net/lists/jessie.us-ca.full |  tee /etc/apt/sources.list.d/neurodebian.sources.list
+ ---> Using cache
+ ---> 70bb565041e8
+Step 7 : RUN apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9
+ ---> Using cache
+ ---> 7ccd5acaa9e7
+Step 8 : RUN apt-get -y update
+ ---> Using cache
+ ---> 02307b0e4d4a
+Step 9 : RUN apt-get install -y apt-utils
+ ---> Using cache
+ ---> 38103253f9fd
+Step 10 : RUN apt-get clean # This resolved a missing libxdamage error
+ ---> Using cache
+ ---> 584f21e840b0
+Step 11 : RUN apt-get update && apt-get install -y python-numpy
+ ---> Using cache
+ ---> d266e9ec62c7
+Step 12 : RUN apt-get install -y python-scipy
+ ---> Using cache
+ ---> 94798202e182
+Step 13 : RUN apt-get update && apt-get install -y python-pip
+ ---> Using cache
+ ---> 781866c95f94
+Step 14 : RUN apt-get install -y nipy-suite
+ ---> Using cache
+ ---> 4611ca8dd437
+Step 15 : RUN apt-get install -y python-dipy
+ ---> Using cache
+ ---> 8321ba1138d3
+Step 16 : RUN apt-get install -y libblas-dev liblapack-dev
+ ---> Using cache
+ ---> 3c3e4701e50a
+Step 17 : RUN wget http://spams-devel.gforge.inria.fr/hitcounter2.php?file=33816/spams-python-v2.5-svn2014-07-04.tar.gz
+ ---> Using cache
+ ---> 9654f513ffb1
+Step 18 : RUN mv hitcounter2.php?file=33816%2Fspams-python-v2.5-svn2014-07-04.tar.gz spams-python-v2.5-svn2014-07-04.tar.gz
+ ---> Using cache
+ ---> 5c6fc8e64c47
+Step 19 : RUN gunzip spams-python-v2.5-svn2014-07-04.tar.gz
+ ---> Using cache
+ ---> 0bb67c885bf4
+Step 20 : RUN tar xvf spams-python-v2.5-svn2014-07-04.tar
+ ---> Using cache
+ ---> 268267a089a0
+Step 21 : RUN cd spams-python && python setup.py build && python setup.py install
+ ---> Using cache
+ ---> 3339ac1ac8ee
+Step 22 : RUN apt-get install -y default-jdk
+ ---> Using cache
+ ---> fde82467ec1f
+Step 23 : RUN apt-get install -y unzip
+ ---> Using cache
+ ---> 23e43ea79ead
+Step 24 : COPY docker/camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip
+ ---> Using cache
+ ---> be0ec7cd2b1d
+Step 25 : ENV CAMINO_HEAP_SIZE 1800
+ ---> Using cache
+ ---> 17395b46ea68
+Step 26 : RUN unzip camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip && mv camino-code-be29107b79b741fea838a50cc419700dd79536bf camino
+ ---> Using cache
+ ---> 60d9c9a49e6b
+Step 27 : RUN ls && cd camino && make
+ ---> Using cache
+ ---> 9da6887de129
+Step 28 : RUN cd /usr/local/bin/ && ln -s /camino
+ ---> Using cache
+ ---> 58bb0c87491d
+Step 29 : ENV PATH /usr/local/bin/camino/bin:${PATH}
+ ---> Using cache
+ ---> ae6ef6b9711a
+Step 30 : COPY docker/AMICO-master AMICO-master
+ ---> Using cache
+ ---> 6d3e7d3ff045
+Step 31 : RUN cd AMICO-master/python && pip install .
+ ---> Using cache
+ ---> dc6545f94fb3
+Step 32 : RUN apt-get install -y fsl-core
+ ---> Using cache
+ ---> be7c114c4615
+Step 33 : COPY noddi_* ./noddiscripts/
+ ---> 0e7b95db761c
+Removing intermediate container 29ed2c51417c
+Step 34 : COPY docker/setupAccounts setupAccounts
+ ---> 175aaec8d027
+Removing intermediate container 24d853f069d5
+Step 35 : RUN ./setupAccounts
+ ---> Running in 71327c2cd3b5
+ ---> 546078356f8c
+Removing intermediate container 71327c2cd3b5
+Step 36 : COPY docker/setupNoddi setupNoddi
+ ---> 13e4a2ba01d4
+Removing intermediate container 785727a849fe
+Step 37 : RUN ./setupNoddi
+ ---> Running in b7f0ab1803ee
+ ---> 267a9b592e31
+Removing intermediate container b7f0ab1803ee
+Step 38 : ENV PATH /usr/local/bin/noddi:${PATH}
+ ---> Running in 53917ce9e947
+ ---> 2f16da7de2be
+Removing intermediate container 53917ce9e947
+Step 39 : ENV HOME /home/cfmriguest
+ ---> Running in 5802b9a50ef5
+ ---> f1a09befc77b
+Removing intermediate container 5802b9a50ef5
+Step 40 : RUN apt-get install -y vim
+ ---> Running in 7e1ca43c190d
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following extra packages will be installed:
+  vim-common vim-runtime
+Suggested packages:
+  ctags vim-doc vim-scripts
+The following NEW packages will be installed:
+  vim vim-common vim-runtime
+0 upgraded, 3 newly installed, 0 to remove and 3 not upgraded.
+Need to get 6184 kB of archives.
+After this operation, 28.9 MB of additional disk space will be used.
+Get:1 http://httpredir.debian.org/debian/ jessie/main vim-common amd64 2:7.4.488-7 [184 kB]
+Get:2 http://httpredir.debian.org/debian/ jessie/main vim amd64 2:7.4.488-7 [953 kB]
+Get:3 http://httpredir.debian.org/debian/ jessie/main vim-runtime all 2:7.4.488-7 [5047 kB]
+Fetched 6184 kB in 13s (472 kB/s)
+Selecting previously unselected package vim-common.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 119728 files and directories currently installed.)
+Preparing to unpack .../vim-common_2%3a7.4.488-7_amd64.deb ...
+Unpacking vim-common (2:7.4.488-7) ...
+Selecting previously unselected package vim-runtime.
+Preparing to unpack .../vim-runtime_2%3a7.4.488-7_all.deb ...
+Adding 'diversion of /usr/share/vim/vim74/doc/help.txt to /usr/share/vim/vim74/doc/help.txt.vim-tiny by vim-runtime'
+Adding 'diversion of /usr/share/vim/vim74/doc/tags to /usr/share/vim/vim74/doc/tags.vim-tiny by vim-runtime'
+Unpacking vim-runtime (2:7.4.488-7) ...
+Selecting previously unselected package vim.
+Preparing to unpack .../vim_2%3a7.4.488-7_amd64.deb ...
+Unpacking vim (2:7.4.488-7) ...
+Processing triggers for mime-support (3.58) ...
+Processing triggers for hicolor-icon-theme (0.13-1) ...
+Setting up vim-common (2:7.4.488-7) ...
+Setting up vim-runtime (2:7.4.488-7) ...
+Processing /usr/share/vim/addons/doc
+Setting up vim (2:7.4.488-7) ...
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vim (vim) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vimdiff (vimdiff) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rvim (rvim) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rview (rview) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vi (vi) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/view (view) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/ex (ex) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/editor (editor) in auto mode
+ ---> 44264c5cfb32
+Removing intermediate container 7e1ca43c190d
+Step 41 : USER cfmriguest
+ ---> Running in 15f62e9b2d0b
+ ---> c92265385a34
+Removing intermediate container 15f62e9b2d0b
+Step 42 : RUN cd && mkdir data
+ ---> Running in 5309c6787800
+ ---> abee755839df
+Removing intermediate container 5309c6787800
+Step 43 : VOLUME /home/cfmriguest/data
+ ---> Running in e05967c9b237
+ ---> 3efbfd837615
+Removing intermediate container e05967c9b237
+Step 44 : RUN cd
+ ---> Running in 120e5785feec
+ ---> 44b98c83a41e
+Removing intermediate container 120e5785feec
+Step 45 : RUN echo "hello from noddi container"
+ ---> Running in 6cd7d714fd3b
+hello from noddi container
+ ---> 56eddccc17fa
+Removing intermediate container 6cd7d714fd3b
+Step 46 : ENTRYPOINT cd $HOME && /bin/bash
+ ---> Running in d8489de7bb3c
+ ---> 42c806dcfacf
+Removing intermediate container d8489de7bb3c
+Successfully built 42c806dcfacf
