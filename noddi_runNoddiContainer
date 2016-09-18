@@ -1,3 +1,0 @@
-#!/bin/sh
-
-docker run -ti --rm -v /home/rbussell/repos/noddi/tempdata:/data noddi

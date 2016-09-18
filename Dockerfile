@@ -73,6 +73,23 @@ RUN cd AMICO-master/python && pip install .
 #set up fsl
 RUN apt-get install -y fsl-core
 
+#install vi
+RUN apt-get install -y vim
+
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    ca-certificates \
+    curl
+
+
+#Set up gosu, a user permissions handling tool
+RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
+RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
+    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
+    && gpg --verify /usr/local/bin/gosu.asc \
+    && rm /usr/local/bin/gosu.asc \
+    && chmod +x /usr/local/bin/gosu
+
+
 #set up afni
 #RUN apt-get install -y afni
 
@@ -85,17 +102,13 @@ RUN ./setupNoddi
 ENV PATH /usr/local/bin/noddi:${PATH} 
 ENV HOME /home/cfmriguest
 
-#install vi
-RUN apt-get install -y vim
-
 #Set up the data file to be shared between host and image
-USER cfmriguest
+#USER cfmriguest
 RUN cd && mkdir data
 
 VOLUME /home/cfmriguest/data
 
-RUN cd
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh 
+RUN chmod u+x /usr/local/bin/entrypoint.sh 
 
-RUN echo "hello from noddi container"
-
-ENTRYPOINT cd $HOME && /bin/bash 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

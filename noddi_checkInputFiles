@@ -1,0 +1,30 @@
+#!/bin/bash
+
+logFn=temp.log
+
+sptMsg=`basename $0`:
+
+missingFileCmd="exit"
+logCmd="tee -a $logFn"
+
+requiredInFiles="brain_mask.hdr brain_mask.img roi_mask.hdr roi_mask.img NODDI_DWI.hdr NODDI_DWI.img NODDI_protocol.bvecs NODDI_protocol.bvals NODDI_protocol.scheme"
+
+echo $sptMsg called from $0 by user $USER on host $HOST | $logCmd
+
+allFilesFlag=1
+
+for inFn in $requiredInFiles;do
+if [ -f $inFn ]; then
+echo $sptMsg input file $inFn is present -- that is good! | $logCmd
+else
+echo $sptMsg ERROR: input file $inFn is NOT present -- that is NOT good! | $logCmd
+allFilesFlag=0
+fi
+done
+
+if [ $allFilesFlag -ne 1 ]; then
+echo $sptMsg ERROR: These files are required in current directory: $requiredInFiles | $logCmd
+echo $sptMsg ERROR: EXITING: Input files are missing or named incorrectly. | $logCmd
+echo $sptMsg ERROR: EXITING: Make sure input files are present in the current directory and have exactly the right file names! | $logCmd
+$missingFileCmd
+fi
