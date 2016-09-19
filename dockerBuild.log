@@ -1,8 +1,8 @@
-./noddi_buildNoddiContainer: called...
-./noddi_buildNoddiContainer:  log file is dockerBuild.log
-./noddi_buildNoddiContainer:  building a processing environment for noddi...
-./noddi_buildNoddiContainer:  ***You only need to run this script once!***
-Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.53 MBSending build context to Docker daemon 34.53 MB
+/home/rbussell/repos/noddi//noddi_buildNoddiContainer: called...
+/home/rbussell/repos/noddi//noddi_buildNoddiContainer:  log file is dockerBuild.log
+/home/rbussell/repos/noddi//noddi_buildNoddiContainer:  building a processing environment for noddi...
+/home/rbussell/repos/noddi//noddi_buildNoddiContainer:  ***You only need to run this script once!***
+Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.54 MBSending build context to Docker daemon 34.57 MB
 Step 1 : FROM debian:jessie
  ---> 031143c1c662
 Step 2 : ENV DEBIAN_FRONTEND noninteractive
@@ -110,40 +110,29 @@ Step 35 : RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007
 Step 36 : RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)"     && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc"     && gpg --verify /usr/local/bin/gosu.asc     && rm /usr/local/bin/gosu.asc     && chmod +x /usr/local/bin/gosu
  ---> Using cache
  ---> cc6e7d798326
-Step 37 : COPY noddi_* ./noddiscripts/
+Step 37 : COPY ./noddi_* ./noddiscripts/
  ---> Using cache
- ---> 6273c9da425f
-Step 38 : COPY docker/setupAccounts setupAccounts
+ ---> dc4b055270ce
+Step 38 : COPY docker/setupNoddi setupNoddi
  ---> Using cache
- ---> c9b4ed0b531c
-Step 39 : RUN ./setupAccounts
- ---> Using cache
- ---> 7745cc2d3311
-Step 40 : COPY docker/setupNoddi setupNoddi
- ---> Using cache
- ---> fb1646877894
-Step 41 : RUN ./setupNoddi
- ---> Using cache
- ---> 4273e835aff5
-Step 42 : ENV PATH /usr/local/bin/noddi:${PATH}
- ---> Using cache
- ---> 3e7a5ff57eba
-Step 43 : ENV HOME /home/cfmriguest
- ---> Using cache
- ---> fe65fc1bbe43
-Step 44 : RUN cd && mkdir data
- ---> Using cache
- ---> 878387a73196
-Step 45 : VOLUME /home/cfmriguest/data
- ---> Using cache
- ---> 268abbcc7038
-Step 46 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
- ---> Using cache
- ---> 28432f3e4346
-Step 47 : RUN chmod u+x /usr/local/bin/entrypoint.sh
- ---> Using cache
- ---> 47a37cd6666d
-Step 48 : ENTRYPOINT /usr/local/bin/entrypoint.sh
- ---> Using cache
- ---> 4341e46e5891
-Successfully built 4341e46e5891
+ ---> dda01b1a7747
+Step 39 : RUN cd && mkdir data
+ ---> Running in 372fa596956c
+ ---> ed7e95e336f2
+Removing intermediate container 372fa596956c
+Step 40 : VOLUME $HOME/data
+ ---> Running in 1e66761ba5d6
+ ---> f0448db31dfa
+Removing intermediate container 1e66761ba5d6
+Step 41 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+ ---> 2101bfd149cd
+Removing intermediate container e4c88a4e9cce
+Step 42 : RUN chmod u+x /usr/local/bin/entrypoint.sh
+ ---> Running in fdfe6cfefdd8
+ ---> 7af7cee12f1d
+Removing intermediate container fdfe6cfefdd8
+Step 43 : ENTRYPOINT /usr/local/bin/entrypoint.sh
+ ---> Running in 8c72f78705cc
+ ---> e9bd3710a5de
+Removing intermediate container 8c72f78705cc
+Successfully built e9bd3710a5de

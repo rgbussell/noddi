@@ -6,6 +6,10 @@ contUserName=cfmriguest
 contHome=/home/$contUserName
 contDataDir=$contHome/data/
 
-docker run -it --name container1 --rm -v $hostCurDir/:$contDataDir -e LOCAL_USER_ID=`id -u $USER` noddi
+docker run -it --name container1 \
+--rm -v $hostCurDir/:$contDataDir \
+-e LOCAL_USER_ID=`id -u $USER` \
+-e LOCAL_USER_NAME=`id -un $USER` \
+noddi
 
 #docker run -it --name container1 --rm -v /home/rbussell/data/noddidata/:/home/cfmriguest/data noddi

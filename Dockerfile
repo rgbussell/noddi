@@ -94,19 +94,18 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
 #RUN apt-get install -y afni
 
 #Import the noddi code from the local directory
-COPY noddi_* ./noddiscripts/
-COPY docker/setupAccounts setupAccounts
-RUN ./setupAccounts
+#COPY docker/setupAccounts setupAccounts
+#RUN ./setupAccounts
+COPY ./noddi_* ./noddiscripts/
 COPY docker/setupNoddi setupNoddi
-RUN ./setupNoddi
-ENV PATH /usr/local/bin/noddi:${PATH} 
-ENV HOME /home/cfmriguest
+#RUN ./setupNoddi
+#ENV PATH /usr/local/bin/noddi:${PATH} 
 
 #Set up the data file to be shared between host and image
 #USER cfmriguest
 RUN cd && mkdir data
 
-VOLUME /home/cfmriguest/data
+VOLUME $HOME/data
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh 
 RUN chmod u+x /usr/local/bin/entrypoint.sh 
