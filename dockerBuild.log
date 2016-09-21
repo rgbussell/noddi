@@ -2,137 +2,32 @@
 /home/rbussell/repos/noddi//noddi_buildNoddiContainer:  log file is dockerBuild.log
 /home/rbussell/repos/noddi//noddi_buildNoddiContainer:  building a processing environment for noddi...
 /home/rbussell/repos/noddi//noddi_buildNoddiContainer:  ***You only need to run this script once!***
-Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.54 MBSending build context to Docker daemon 34.57 MB
-Step 1 : FROM debian:jessie
- ---> 031143c1c662
-Step 2 : ENV DEBIAN_FRONTEND noninteractive
+Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.48 MB
+Step 1 : FROM rgbussell/noddi_base
+ ---> 7980515045c5
+Step 2 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
  ---> Using cache
- ---> 713f27b9e963
-Step 3 : RUN apt-get -y update
+ ---> 5ae44b67cc05
+Step 3 : RUN chmod u+x /usr/local/bin/entrypoint.sh
  ---> Using cache
- ---> d7929d09a872
-Step 4 : RUN apt-get install -y apt-utils
- ---> Using cache
- ---> 4b2db02bcac2
-Step 5 : RUN apt-get install -y wget
- ---> Using cache
- ---> de92bde0289a
-Step 6 : RUN wget -O- http://neuro.debian.net/lists/jessie.us-ca.full |  tee /etc/apt/sources.list.d/neurodebian.sources.list
- ---> Using cache
- ---> 554d60102167
-Step 7 : RUN apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9
- ---> Using cache
- ---> ad3b0bee331c
-Step 8 : RUN apt-get -y update
- ---> Using cache
- ---> d3a934d71a46
-Step 9 : RUN apt-get install -y apt-utils
- ---> Using cache
- ---> a46b4ec1a9ad
-Step 10 : RUN apt-get clean # This resolved a missing libxdamage error
- ---> Using cache
- ---> 192463d363c3
-Step 11 : RUN apt-get update && apt-get install -y python-numpy
- ---> Using cache
- ---> cdaa2bb40467
-Step 12 : RUN apt-get install -y python-scipy
- ---> Using cache
- ---> 63e7f54e8e11
-Step 13 : RUN apt-get update && apt-get install -y python-pip
- ---> Using cache
- ---> d2a6c5430323
-Step 14 : RUN apt-get install -y nipy-suite
- ---> Using cache
- ---> 96dcef1c3876
-Step 15 : RUN apt-get install -y python-dipy
- ---> Using cache
- ---> f0420bab148f
-Step 16 : RUN apt-get install -y libblas-dev liblapack-dev
- ---> Using cache
- ---> 089f95bbc005
-Step 17 : RUN wget http://spams-devel.gforge.inria.fr/hitcounter2.php?file=33816/spams-python-v2.5-svn2014-07-04.tar.gz
- ---> Using cache
- ---> 69a64767a7cd
-Step 18 : RUN mv hitcounter2.php?file=33816%2Fspams-python-v2.5-svn2014-07-04.tar.gz spams-python-v2.5-svn2014-07-04.tar.gz
- ---> Using cache
- ---> e4bfe5ee0b84
-Step 19 : RUN gunzip spams-python-v2.5-svn2014-07-04.tar.gz
- ---> Using cache
- ---> eba564b34dd8
-Step 20 : RUN tar xvf spams-python-v2.5-svn2014-07-04.tar
- ---> Using cache
- ---> 9b86b65dea3b
-Step 21 : RUN cd spams-python && python setup.py build && python setup.py install
- ---> Using cache
- ---> daf1e1e74949
-Step 22 : RUN apt-get install -y default-jdk
- ---> Using cache
- ---> 748894bd6089
-Step 23 : RUN apt-get install -y unzip
- ---> Using cache
- ---> 656281244eb3
-Step 24 : COPY docker/camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip
- ---> Using cache
- ---> 03c18c1b028f
-Step 25 : ENV CAMINO_HEAP_SIZE 1800
- ---> Using cache
- ---> 8072bbf2baca
-Step 26 : RUN unzip camino-code-be29107b79b741fea838a50cc419700dd79536bf.zip && mv camino-code-be29107b79b741fea838a50cc419700dd79536bf camino
- ---> Using cache
- ---> e5f7e48f2d1e
-Step 27 : RUN ls && cd camino && make
- ---> Using cache
- ---> a50a0b303eed
-Step 28 : RUN cd /usr/local/bin/ && ln -s /camino
- ---> Using cache
- ---> 0ec768dcf394
-Step 29 : ENV PATH /usr/local/bin/camino/bin:${PATH}
- ---> Using cache
- ---> 096e90d660d0
-Step 30 : COPY docker/AMICO-master AMICO-master
- ---> Using cache
- ---> 5ab0dcf1345c
-Step 31 : RUN cd AMICO-master/python && pip install .
- ---> Using cache
- ---> 716492b86edc
-Step 32 : RUN apt-get install -y fsl-core
- ---> Using cache
- ---> e159e8d47cc3
-Step 33 : RUN apt-get install -y vim
- ---> Using cache
- ---> 76df5d8ab962
-Step 34 : RUN apt-get update && apt-get -y --no-install-recommends install     ca-certificates     curl
- ---> Using cache
- ---> bdeba05dd2bc
-Step 35 : RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
- ---> Using cache
- ---> 5ac47fdb1fe8
-Step 36 : RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)"     && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc"     && gpg --verify /usr/local/bin/gosu.asc     && rm /usr/local/bin/gosu.asc     && chmod +x /usr/local/bin/gosu
- ---> Using cache
- ---> cc6e7d798326
-Step 37 : COPY ./noddi_* ./noddiscripts/
- ---> Using cache
- ---> dc4b055270ce
-Step 38 : COPY docker/setupNoddi setupNoddi
- ---> Using cache
- ---> dda01b1a7747
-Step 39 : RUN cd && mkdir data
- ---> Running in 372fa596956c
- ---> ed7e95e336f2
-Removing intermediate container 372fa596956c
-Step 40 : VOLUME $HOME/data
- ---> Running in 1e66761ba5d6
- ---> f0448db31dfa
-Removing intermediate container 1e66761ba5d6
-Step 41 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
- ---> 2101bfd149cd
-Removing intermediate container e4c88a4e9cce
-Step 42 : RUN chmod u+x /usr/local/bin/entrypoint.sh
- ---> Running in fdfe6cfefdd8
- ---> 7af7cee12f1d
-Removing intermediate container fdfe6cfefdd8
-Step 43 : ENTRYPOINT /usr/local/bin/entrypoint.sh
- ---> Running in 8c72f78705cc
- ---> e9bd3710a5de
-Removing intermediate container 8c72f78705cc
-Successfully built e9bd3710a5de
+ ---> 56ac18c165ef
+Step 4 : ENV NODDI_PATH /usr/local/bin/noddi/
+ ---> Running in 4cc132ec026c
+ ---> ea54a97ee694
+Removing intermediate container 4cc132ec026c
+Step 5 : ENV PATH $NODDI_PATH/:${PATH}
+ ---> Running in 03dc40eac7c0
+ ---> 483a5a86f6bf
+Removing intermediate container 03dc40eac7c0
+Step 6 : COPY ./noddi_* $NODDI_PATH
+ ---> 905db012af12
+Removing intermediate container 0ced5dcd4c76
+Step 7 : RUN chmod a+x $NODDI_PATH/*
+ ---> Running in abcedfa23171
+ ---> bf008f91cc26
+Removing intermediate container abcedfa23171
+Step 8 : ENTRYPOINT bash
+ ---> Running in 922328199b1f
+ ---> afc8fe3fc6ba
+Removing intermediate container 922328199b1f
+Successfully built afc8fe3fc6ba
