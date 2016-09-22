@@ -1,0 +1,3 @@
+#!/bin/sh
+noddi_checkInputFiles
+noddi_runAmicoNoddi Study01 Subject01

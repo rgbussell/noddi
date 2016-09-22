@@ -2,7 +2,8 @@
 
 #Sort out host and container file location
 hostCurDir=`pwd`
-contUserName=cfmriguest
+contUserName=`id -un`
+#contUserName=cfmriguest
 contHome=/home/$contUserName
 contDataDir=$contHome/data/
 
