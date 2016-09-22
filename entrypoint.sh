@@ -14,15 +14,17 @@ USER_NAME=${LOCAL_USER_NAME:user}
 
 echo "$sptMsg Starting with UID : $USER_ID"
 
-useradd --shell /bin/bash -u $USER_ID -o -c "" -m $USER_NAME
+useradd --shell /bin/tcsh -u $USER_ID -o -c "" -m $USER_NAME
 export HOME=/home/$USER_NAME
 
 
-chown rbussell $HOME/ -R
+chown $USER_NAME $HOME/ -R
 
 cd $HOME/data
 
 exec /usr/local/bin/gosu $USER_NAME /bin/bash
+exec /usr/local/bin/gosu $USER_NAME noddi_main
+
 #exec /usr/local/bin/gosu $USER_NAME noddi_main
 
 #exec /usr/local/bin/gosu user "$@"

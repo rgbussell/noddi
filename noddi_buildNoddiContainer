@@ -12,7 +12,6 @@ if [[ ! -f "./Dockerfile" ]];then
 fi
 
 echo $sptMsg " building a processing environment for noddi..." | tee -a $logFn
-echo $sptMsg " ***You only need to run this script once!***" | tee -a $logFn
 
 docker build -t noddi .  | tee -a $logFn
 

@@ -1,3 +1,18 @@
 #!/bin/sh
-noddi_checkInputFiles
-noddi_runAmicoNoddi Study01 Subject01
+
+launchDir=`pwd`
+
+#set up fsl environment
+
+source setupFslEnv
+
+#file locations
+subjDir=Subject01
+studyDir=Study01
+noddiDir=$studyDir/$subjDir
+
+noddi_preprocImmunoTypeInputData
+
+cd $launchDir/$noddiDir; noddi_checkInputFiles; cd $launchDir
+
+noddi_runAmicoNoddi $studyDir $subjDir

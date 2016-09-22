@@ -1,0 +1,7 @@
+#fsl
+export FSLDIR=/usr/share/fsl/5.0
+export PATH=$PATH:$FSLDIR/bin
+source $FSLDIR/etc/fslconf/fsl.sh
+
+export FSLOUTPUTTYPE=NIFTI_GZ
+#setenv FSLOUTPUTTYPE NIFTI
