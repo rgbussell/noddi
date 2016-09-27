@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mkdir -p /usr/local/bin
+export NODDI_PATH=/usr/local/bin/noddi
+
+
+mkdir -p $NODDI_PATH
+cp noddi_* $NODDI_PATH
+
+export PATH=/usr/local/bin/noddi/:$PATH
