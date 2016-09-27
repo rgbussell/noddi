@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#noddi_censorByVolumeNumber
+sptMsg="`basename $0`:"
+
+nArgsRequired=2
+
+if [ $# -lt $nArgsRequired ]; then
+ echo $sptMsg ERROR: need at least $nArgsRequired arguments to run `basename $0`
+fi
+
+echo $sptMsg called
+
+dwiInFn=$1
+censorInFn=$2
+
+tmp=`basename $dwiInFn`
+dwiPrefix=`echo $tmp | sed 's/.gz//' | sed 's/.nii//'`
+dwiPrefixCensored=$dwiPrefix"_censored"
+
+tmpVolPrefix="tmp$$_"
+
+nVols=`fslnvols $dwiInFn`
+echo $sptMsg splitting file into $nVols volumes
+
+fslsplit $dwiInFn $tmpVolPrefix -t
+
+grep . $censorInFn | grep -v ^# > volsToRemove.$$
+
+while read line; do
+echo $sptMsg removing volume $line
+padNum=`printf "%04d" $line`
+rm "$tmpVolPrefix"$padNum".nii.gz"
+done < volsToRemove.$$
+
+fslmerge -t $dwiPrefixCensored `ls $tmpVolPrefix* | sort -n` 
+
+$sptMsg creating censored bvals and bvecs files
+
+#idxVol=0
+#fslCmd="fslmerge -t"
+#while [ $idxVol -lt $nVols ]; do
+# idxVol=`echo "$idxVol + 1" | bc`
+# fnToMerge="$tmpVolPrefix"`printf "%04d\n" $idxVol`.nii.gz
+# echo $fnToMerge
+# fslCmd="$fslCmd $fnToMerge"
+#done
+
+rm tmp$$*
+rm volsToRemove.$$
+
+#$censorInFn
