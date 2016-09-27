@@ -1,0 +1,17 @@
+#!/bin/sh
+
+censorCmd=~/repos/noddi/noddi_censorByVolumeNumber 
+dataDir=../../
+bvalsFn=/home/rbussell/repos/noddi/gradientTables/pniPilot160817/bvals_multi.txt
+bvecsFn=/home/rbussell/repos/noddi/gradientTables/pniPilot160817/bvecs_multi.txt
+
+ls $dataDir/*.censor > censorFiles.$$
+
+while read censorFn; do
+dwiFn=`echo $censorFn | sed 's/.censor/.nii.gz/'`
+$censorCmd $dwiFn $censorFn $bvalsFn $bvecsFn
+done < censorFiles.$$
+
+#cleanup
+rm censorFiles.$$
+
