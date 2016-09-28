@@ -32,23 +32,27 @@ fslsplit $dwiInFn $tmpVolPrefix -t
 
 grep . $censorInFn | grep -v ^# > volsToRemove.$$
 
-$sptMsg creating censored bvals and bvecs files
+echo $sptMsg creating censored bvals and bvecs files
 
 cat -n $bvalsFn | awk '{print $1-1, $2}' > $bvalsFnCensored
 cat -n $bvecsFn | awk '{print $1-1, $2, $3, $4}' > $bvecsFnCensored
 
 while read line; do
-echo $sptMsg removing volume $line
-padNum=`printf "%04d" $line`
-rm -f "$tmpVolPrefix"$padNum".nii.gz"
-echo $sptMsg removing grad dir $line from gradient tables 
-grep -v "^$line " $bvecsFnCensored > temp.$$; mv temp.$$ $bvecsFnCensored 
-grep -v "^$line " $bvalsFnCensored > temp.$$; mv temp.$$ $bvalsFnCensored 
+ echo $sptMsg removing volume $line
+ padNum=`printf "%04d" $line`
+ rm -f "$tmpVolPrefix"$padNum".nii.gz"
+ echo $sptMsg removing grad dir $line from gradient tables 
+ grep -v "^$line " $bvecsFnCensored > temp.$$; mv temp.$$ $bvecsFnCensored 
+ grep -v "^$line " $bvalsFnCensored > temp.$$; mv temp.$$ $bvalsFnCensored 
 done < volsToRemove.$$
+
+awk '{print $2, $3, $4}' $bvecsFnCensored  > temp.$$; mv temp.$$ $bvecsFnCensored 
+awk '{print $2}'         $bvalsFnCensored  > temp.$$; mv temp.$$ $bvalsFnCensored 
 
 fslmerge -t $dwiPrefixCensored `ls $tmpVolPrefix* | sort -n` 
 
 rm -f tmp$$*
 rm -f volsToRemove.$$
+rm -f temp.$$
 
 #$censorInFn

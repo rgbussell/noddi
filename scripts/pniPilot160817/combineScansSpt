@@ -1,0 +1,8 @@
+#!/bin/sh
+#! A simple script to combine data from two back-to-back dti scans
+
+cd /mnt/raid20/rbussell/data/160817_pni_pilot/processed/censored
+
+fslmerge -t dti4s1and2post_m3_censored dti4s1post_m3_censored dti4s2post_m3_censored
+
+cat dti4s1post_m3_censored.bvals dti4s2post_m3_censored.bvals > dti4s1and2post_m3_censored.bvals

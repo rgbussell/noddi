@@ -1,0 +1,74 @@
+#!/bin/sh
+#censoredAnalysisSpt -- run a censored analysis of the data
+
+#allDataDir=/mnt/raid20/rbussell/data/160817_pni_pilot/processed/
+
+sptMsg=`basename $0`:
+
+callDir=`pwd`
+
+txtInFn=$1
+nArgsRequired=1
+
+if [ "$#" -lt "$nArgsRequired" ]; then
+echo $sptMsg ERROR: EXITING need at least $nArgsRequired input arguments
+exit
+fi
+
+#function defs---------------
+setupOne() {
+
+ cd $callDir; mkdir -p $dataLabel; cd $dataLabel
+ ln -s $censoredDatDir/$dwiInFn
+ ln -s $censoredDatDir/$bvalsInFn
+ ln -s $censoredDatDir/$bvecsInFn
+
+ #echo $sptMsg creating brain mask
+
+ echo $sptMsg creating masks
+ $NODDI_PATH/noddi_makeMaskMouse  $censoredDatDir/$dwiInFn 1 30
+ ln -s brain_mask.nii.gz mask.nii.gz
+ ln -s brain_roi.nii.gz mask_mask.nii.gz
+
+ setupDataCmd="$NODDI_PATH/noddi_setupData $dwiInFn Study01 Study01/Subject01 $bvalsInFn $bvecsInFn"
+ echo $sptMsg setup data command is:
+ echo $setupDataCmd
+ $setupDataCmd
+}
+
+
+#main-----------------
+
+echo $sptMsg reading dat dirs from input txt file
+#
+censoredDatDir=`grep "^censoredDatDir" $txtInFn | awk '{print $2}'`
+uncensoredDatDir=`grep "^uncensoredDatDir" $txtInFn | awk '{print $2}'`
+
+grep . $txtInFn \
+| grep -v "^uncensoredDatDir" \
+| grep -v "^censoredDatDir" \
+| grep -v "^#" > tempTxtFile.$$
+
+more tempTxtFile.$$
+
+while read line; do 
+ echo ---
+ echo $sptMsg input line: $line
+ dataLabel=`echo $line | awk '{print $1}'`
+ dataPrefix=`echo $line | awk '{print $2}'`
+ dwiInFn=$dataPrefix.nii.gz
+ bvalsInFn=$dataPrefix.bvals
+ bvecsInFn=$dataPrefix.bvecs
+ maskFn=brain_mask.nii.gz
+ roiFn=brain_roi.nii.gz
+ echo $sptMsg dwiInFn is $dwiInFn
+ echo $sptMsg bvecsInFn is $bvecsInFn
+ echo $sptMsg bvalsInFn is $bvalsInFn
+ echo $sptMsg roiFn is $roiFn
+ echo $sptMsg maskFn is $maskFn
+
+ setupOne
+
+done < tempTxtFile.$$
+
+rm $callDir/tempTxtFile.$$

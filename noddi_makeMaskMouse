@@ -4,9 +4,17 @@
 
 dwiNiiInFile=$1
 numB0=$2
+nArgRequired=2
+
 threshPercent=40
 
+if [ "$#" -ge "3" ]; then
+threshPercent=$3
+fi
+
 FSLOUTPUTTYPE=NIFTI_GZ
+
+echo $dwiNiiInFile
 
 fslroi $dwiNiiInFile b0_only.nii.gz 0 $numB0
 
