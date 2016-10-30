@@ -2,11 +2,11 @@
 
 #create brain only and brain binary mask from DTI data
 
+sptMsg=`basename $0`:
 dwiNiiInFile=$1
 numB0=$2
+threshPercent=$3 #optional
 nArgRequired=2
-
-threshPercent=40
 
 if [ "$#" -ge "3" ]; then
 threshPercent=$3

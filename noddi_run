@@ -1,0 +1,46 @@
+#!/bin/bash
+#Run noddi pipeline on Eyler immuno type input data
+#Robert Bussell October 2016
+
+sptMsg="`basename $0`":
+
+#set up the log file
+dateStr=`date | sed 's/ /_/g'`
+logFn=`basename $0`"_"$dateStr".log"
+
+echo $sptMsg calling $0 | tee -a $logFn
+
+echo $sptMsg env var NODDI_PATH is $NODDI_PATH | tee -a $logFn
+
+noddiPath=$NODDI_PATH
+echo $sptMsg using path $NODDI_PATH
+
+echo $sptMsg setting preproc command | tee -a $logFn
+if [[ "x$1" -eq "ximmuno" ]];then
+preproc_cmd=$NODDI_PATH/noddi_preprocImmunoTypeInputData 
+else
+echo $sptMsg input data type unknown. Try immuno.  | tee -a $logFn
+exit
+fi
+
+echo $sptMsg preprocessing with command: $preproc_cmd | tee -a $logFn
+$preproc_cmd
+
+echo $sptMsg starting container for noddi processing
+
+#Sort out host and container file location
+hostCurDir=`pwd`
+contUserName=`id -un`
+#contUserName=cfmriguest
+contHome=/home/$contUserName
+contDataDir=$contHome/data/
+
+docker run -it --name container1 \
+--rm -v $hostCurDir/:$contDataDir \
+-e LOCAL_USER_ID=`id -u $USER` \
+-e LOCAL_USER_NAME=`id -un $USER` \
+-e DISPLAY=$DISPLAY \
+-v /tmp/.X11-unix:/tmp.X11-unix \
+noddi:latest
+
+#docker run -it --name container1 --rm -v /home/rbussell/data/noddidata/:/home/cfmriguest/data noddi

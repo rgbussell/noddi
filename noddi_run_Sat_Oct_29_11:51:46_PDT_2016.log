@@ -1,0 +1,4 @@
+noddi_run: calling ./noddi_run
+noddi_run: env var NODDI_PATH is /rpool/home/rbussell/repos/noddi
+noddi_run: setting preproc command
+noddi_run: preprocessing with command: /rpool/home/rbussell/repos/noddi/noddi_preprocImmunoTypeInputData

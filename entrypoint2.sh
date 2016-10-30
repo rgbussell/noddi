@@ -17,21 +17,13 @@ echo "$sptMsg Starting with UID : $USER_ID"
 useradd --shell /bin/tcsh -u $USER_ID -o -c "" -m $USER_NAME
 export HOME=/home/$USER_NAME
 
-chown $USER_NAME /home/$USER_NAME
+
+chown $USER_NAME $HOME/ -R
 
 cd $HOME/data
 
-if [[ -d "Study01" ]]; then
-chown $USER_NAME . -R
-#exec /usr/local/bin/gosu $USER_NAME /bin/bash
+exec /usr/local/bin/gosu $USER_NAME /bin/bash
 exec /usr/local/bin/gosu $USER_NAME noddi_main
-else
-echo this does not look like a noddi data dir -- container exiting
-exit
-fi
-
-exit
-#exec /usr/local/bin/gosu $USER_NAME /bin/bash
 
 #exec /usr/local/bin/gosu $USER_NAME noddi_main
 

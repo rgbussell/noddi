@@ -5,6 +5,7 @@ addpath(getenv('AFNI_MATLAB_PATH'));
 addpath(getenv('PROCESS7T_PATH'));
 addpath([getenv('PROCESS7T_PATH') '/processing']);
 addpath([getenv('PROCESS7T_PATH') '/physics']);
+addpath([getenv('PROCESS7T_PATH') '/utils']);
 
 %addpath('/home/rbussell/matlab/process7T/processing/');
 %addpath('/home/rbussell/matlab/afni_matlab/matlab/');

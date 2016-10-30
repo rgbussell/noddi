@@ -13,6 +13,6 @@ fi
 
 echo $sptMsg " building a processing environment for noddi..." | tee -a $logFn
 
-docker build -t noddi .  | tee -a $logFn
+docker build -t noddi:latest .  | tee -a $logFn
 
 lastLogMsg=`tail -1 $logFn`
