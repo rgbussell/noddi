@@ -12,9 +12,11 @@ if [ "$#" -ge "3" ]; then
 threshPercent=$3
 fi
 
+minClusterSize=1500
+
 FSLOUTPUTTYPE=NIFTI_GZ
 
-echo $dwiNiiInFile
+echo $sptMsg dwiNiiInFile is $dwiNiiInFile
 
 fslroi $dwiNiiInFile b0_only.nii.gz 0 $numB0
 
@@ -25,4 +27,11 @@ mv brain_mask_mean.nii.gz brain_mask.nii.gz
 
 fslmaths brain_mask.nii.gz -bin brain_roi.nii.gz
 
+#get rid of islands
+rm -f large_cluster_mask.nii.gz
+3dclust -prefix large_cluster_mask.nii.gz -dxyz=1 1.01 1500 brain_roi.nii.gz
+mv large_cluster_mask.nii.gz brain_roi.nii.gz
+
 fslmaths brain_roi.nii.gz -mul $dwiNiiInFile dwi_brain_only.nii.gz
+
+echo $sptMsg exiting

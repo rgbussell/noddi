@@ -17,7 +17,7 @@ scanDir=$1
 
 sptMsg="$0":
 
-echo $sptMsg has scanDir=$scanDir
+#echo $sptMsg has scanDir=$scanDir
 
 methodFile=$scanDir/method
 
