@@ -1,0 +1,16 @@
+#!/bin/sh
+
+topDir=`pwd`
+
+preProcCmd=/rpool/home/rbussell/repos/noddi/noddi_setupData
+noddiCmd=/rpool/home/rbussell/repos/noddi/noddi_runContainer
+
+for dirName in 1001 1002 1005 1006 1008 1009 1011 1012 1013 1014 1015_V2 1018 1020_V2 1021 1023 1025 1026 1028 1034 1040
+do
+echo preprocessing $dirName for noddi analysis
+cd $topDir
+cd $dirName
+$preProcCmd dti_topup_eddy.nii.gz Study01 Study01/Subject01 bvals.1D bvecs.1D b0_brain_mask.nii.gz b0_brain_mask.nii.gz
+$noddiCmd
+cd $topDir
+done

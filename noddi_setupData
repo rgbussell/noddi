@@ -16,6 +16,8 @@ studyDir=$2
 subjDir=$3
 bvalFn=$4
 bvecFn=$5
+maskFn=$6
+roiMaskFn=$7
 #subjNum=$6
 
 
@@ -60,8 +62,8 @@ echo $scriptMsg making input analyze files
 #fslchfiletype ANALYZE $subjNum/mask_mask.nii.gz $subjDir/roi_mask
 #fslchfiletype ANALYZE $subjNum/mask.nii.gz $subjDir/brain_mask
 #fslchfiletype ANALYZE $subjNum/$dwiNiiInfile $subjDir/NODDI_DWI
-fslchfiletype ANALYZE mask_mask.nii.gz $subjDir/roi_mask
-fslchfiletype ANALYZE mask.nii.gz $subjDir/brain_mask
+fslchfiletype ANALYZE $maskFn $subjDir/roi_mask
+fslchfiletype ANALYZE $roiMaskFn $subjDir/brain_mask
 fslchfiletype ANALYZE $dwiNiiInfile $subjDir/NODDI_DWI
 
 echo $scriptMsg exiting
