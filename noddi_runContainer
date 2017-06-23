@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #Sort out host and container file location
 hostCurDir=`pwd`
 contUserName=`id -un`
@@ -7,7 +8,15 @@ contUserName=`id -un`
 contHome=/home/$contUserName
 contDataDir=$contHome/data/
 
-docker run -it --name container1 \
+containerName=$1
+
+case $containerName in
+	noddi1|noddi2|noddi3|noddi4) echo found valid container name $containerName;;
+	*) echo did not find a valid container name, exiting; exit;;
+esac
+
+#docker run -i --name $containerName \
+docker run --name $containerName \
 --rm -v $hostCurDir/:$contDataDir \
 -e LOCAL_USER_ID=`id -u $USER` \
 -e LOCAL_USER_NAME=`id -un $USER` \
