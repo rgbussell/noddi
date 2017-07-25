@@ -1,0 +1,32 @@
+#!/bin/tcsh
+set pwd = /rpool/home/ajacobson/data/eyler_work/Immuno
+set segpath = /T1_SegFS/mri/x_nifti_segmentations
+set npath = /NODDI/NODDI_Registered
+
+mkdir ${pwd}/NoddiRoiGroupData
+
+foreach subject ( 24 25 26 27 28 29 )
+
+        mkdir ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData
+
+        foreach nfile ( FIT_dir_Reg2DTI  FIT_ICVF_Reg2DTI  FIT_ISOVF_Reg2DTI  FIT_OD_Reg2DTI )
+                3dROIstats -mask ${pwd}/Sub_SZ0${subject}${segpath}/aseg.nii.gz \
+                -nzmean -nzsigma -nzvoxels ${pwd}/Sub_SZ0${subject}${npath}/${nfile}.nii.gz >  \
+                ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData/Sub_SZ0${subject}_${nfile}_aseg_results.txt
+        end
+                cat \
+                ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData/Sub_*_results.txt > \
+                ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData/Sub_SZ0${subject}_noddi_roi_aseg_data.txt
+                /bin/rm -rf ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData/Sub_*_results.txt
+        
+
+cp ${pwd}/Sub_SZ0${subject}/ROIstats_Results_NoddiData/Sub_SZ0${subject}_noddi_roi_aseg_data.txt \
+${pwd}/NoddiRoiGroupData
+
+
+end
+
+cat \
+${pwd}/NoddiRoiGroupData/Sub_SZ0*_noddi_roi_aseg_data.txt > \
+${pwd}/NoddiRoiGroupData/All_Sub_ASEG_NODDI_Data.txt
+/bin/rm -rf ${pwd}/NoddiRoiGroupData/Sub_SZ0*_noddi_roi_aseg_data.txt
