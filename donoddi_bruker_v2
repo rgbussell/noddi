@@ -1,0 +1,72 @@
+#!/bin/sh
+
+#This scripts is used to do the NODDI analysis on the Bruker data.
+# Input1: full path to where the nii image is
+# Input2: Output patha nd name
+# Input3: full path to where the raw Bruker data is
+# Example:  donoddi_bruker_v2 /rpool/home/maryam/data/noddi_bruker/gbrown/iTAT_1082/iTAT_1082_dti_reg.nii.gz ./outputs /rpool/home/maryam/data/noddi_bruker/gbrown/iTAT_1082.Ao1/10
+
+topDir=`pwd`
+
+preProcCmd=/rpool/home/rbussell/repos/noddi/noddi_setupData
+noddiCmd="/rpool/home/rbussell/repos/noddi/noddi_runContainer noddi1"
+
+scanName=$1
+outDir=$2
+brukerDir=$3
+
+#for dirName in $topDir/iTAT*; do
+#[ -d $dirName ] && cd "$dirName"
+
+#cd $topDir
+#cd $dirName
+
+mkdir -p $outDir
+cd $outDir
+
+currentDir=`pwd`
+echo "Current working directory is: $currentDir"
+
+if [ -d "Study01" ]
+then
+echo "This subject has already been processed*****************"
+
+else
+
+if ! [[ -f bvals_multi.txt && -f bvecs_multi.txt ]]
+then
+
+	echo "Generating the bvec and bvals..........."
+    /apps/matlabcode/noddi/noddi_getBVecsBruker $brukerDir > bvecs
+
+    /apps/matlabcode/noddi/noddi_getBValsBruker $brukerDir > bvals
+
+    /apps/matlabcode/noddi/noddi_makeMultiShellBvalsBvecs bvecs bvals 5 2 1000 2000
+fi
+
+if ! [[ -f brain_roi.nii.gz && -f brain_mask.nii.gz ]]
+then
+    echo "Generating the mask**************************"
+    /apps/matlabcode/noddi/noddi_makeMaskMouse $scanName 5 20
+fi
+
+
+if [[ -f brain_mask.nii.gz && -f bvals_multi.txt && -f bvecs_multi.txt && -f $scanName ]]; 
+then
+#	echo "Removing the existing Study01 directory..."
+#	rm -r Study01
+
+	$preProcCmd $scanName Study01 Study01/Subject01 bvals_multi.txt bvecs_multi.txt brain_mask.nii.gz brain_roi.nii.gz
+	echo "Setup is complete ****"
+
+	echo "Running NODDI analysis........"
+	$noddiCmd
+	echo "NODDI analysis is complete for $currentDir +++++++++++++++++++++"
+	echo "-----------------------------------------------------------------"
+else
+	echo "Missing some files for $currentDir.... Skipping the NODDI analysis!!!! "
+fi
+fi
+
+cd $topDir
+#done
