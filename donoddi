@@ -1,0 +1,47 @@
+#!/bin/sh
+
+topDir=`pwd`
+
+preProcCmd=/rpool/home/rbussell/repos/noddi/noddi_setupData
+noddiCmd="/rpool/home/rbussell/repos/noddi/noddi_runContainer noddi1"
+
+for dirName in $topDir/*; do
+[ -d $dirName ] && cd "$dirName"
+
+cd $topDir
+cd $dirName
+currentDir=`pwd`
+echo "Current working directory is: $currentDir"
+
+if [-d "Study01"]
+then
+echo "This subject has already been processed*****************"
+
+else
+
+if [ -f mask_mask.nii.gz ]
+then
+	renameMask="3dcopy mask_mask.nii.gz b0_brain_mask.nii.gz"
+	$renameMask
+	echo "Renaming the mask..."
+fi
+
+if [[ -f b0_brain_mask.nii.gz && -f bvals.1D && -f bvecs.1D && -f dti_topup_eddy.nii.gz ]]; 
+then
+#	echo "Removing the existing Study01 directory..."
+#	rm -r Study01
+
+	$preProcCmd dti_topup_eddy.nii.gz Study01 Study01/Subject01 bvals.1D bvecs.1D b0_brain_mask.nii.gz b0_brain_mask.nii.gz
+	echo "Setup is complete ****"
+
+	echo "Running NODDI analysis........"
+	$noddiCmd
+	echo "NODDI analysis is complete for $currentDir +++++++++++++++++++++"
+	echo "-----------------------------------------------------------------"
+else
+	echo "Missing some files for $currentDir.... Skipping the NODDI analysis!!!! "
+fi
+fi
+
+cd $topDir
+done
