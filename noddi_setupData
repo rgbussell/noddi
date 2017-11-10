@@ -5,9 +5,11 @@
 # make the subject and study directories
 #convert input nifti files to analyze format
 
+#171110 output messages shortened a bit :RGB
 scriptMsg="script $0:"
 
 echo $scriptMsg called
+scriptMsg=`basename $0`":"
 
 #studyDir=Study01
 #subjDir=$studyDir/Subject01

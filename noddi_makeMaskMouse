@@ -8,6 +8,8 @@ numB0=$2
 threshPercent=$3 #optional
 nArgRequired=2
 
+threshPercent=0.2
+
 if [ "$#" -ge "3" ]; then
 threshPercent=$3
 fi
