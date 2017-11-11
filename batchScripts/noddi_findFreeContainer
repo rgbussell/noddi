@@ -8,9 +8,9 @@
 #171110 RGB Poll for next available container
 
 #Control vars for polling time, timeouts, etc
-containerStartTime=15 #initial sleep to let called containers start
-sleepTime=60 # seconds per poll rep.
-maxCountOut=60 # max polls before timeout
+#containerStartTime=300 #initial sleep to let previously called containers start
+sleepTime=300 # seconds per poll rep.
+maxCountOut=120 # max polls before timeout
 debug=1
 
 availContainerFn=$1
@@ -20,7 +20,7 @@ find_available_container() {
  rm -f $availContainerFn
  echo "0" > $availContainerFn
 
- sleep $containerStartTime #wait for previously called containers to start
+# sleep $containerStartTime #wait for previously called containers to start
 
  if [[ "$debug" -eq "1" ]]; then 
   echo "<<<<<<<" entered wait_for_next_container_slot ">>>>>>"
