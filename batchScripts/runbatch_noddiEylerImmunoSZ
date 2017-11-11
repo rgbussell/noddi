@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#run noddi batch processing for Eyler SZ data
+
+sptMsg="$0:"
+echo $sptMsg called
+sptMsg="`basename $0`:"
+
+procOneCmd=$NODDI_PATH/batchScripts/noddiProcSpt
+
+#set per study control vars
+preDir=/rpool/home/rbussell/data/ImmunoImaging/
+dtiDir=HCP/
+dtiFn=dti_topup_eddy.nii.gz
+maskFn=mask_mask.nii.gz
+
+preOut=/rpool/home/rbussell/data/171110_eyler_immuno_noddi_reproc
+
+sleepTime=60 # wait before trying to launch another
+
+#loop through subjects and process
+subNums=`ls $preDir/SZ* -d | xargs -n 1 basename | grep -v "^$"`
+for subNum in $subNums 
+do
+ sleep $sleepTime
+ echo $sptMsg processing $subNum
+ outDir=$preOut/$subNum
+ $procOneCmd $preDir/$subNum $dtiDir $outDir $dtiFn $maskFn 
+done

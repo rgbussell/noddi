@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# poll for next available noddi contiainer
+# This is support code for batch processing of noddi data
+# available container name is written to 
+#
+# Robert Bussell, University of California
+#171110 RGB Poll for next available container
+
+#Control vars for polling time, timeouts, etc
+#containerStartTime=300 #initial sleep to let previously called containers start
+sleepTime=300 # seconds per poll rep.
+maxCountOut=120 # max polls before timeout
+debug=1
+
+availContainerFn=$1
+
+find_available_container() {
+
+ rm -f $availContainerFn
+ echo "0" > $availContainerFn
+
+# sleep $containerStartTime #wait for previously called containers to start
+
+ if [[ "$debug" -eq "1" ]]; then 
+  echo "<<<<<<<" entered wait_for_next_container_slot ">>>>>>"
+ fi
+
+ breakOut=0
+ freeContainer=0
+ countOut=0
+  while [ "$breakOut" -eq 0 ]; do
+   countOut=$((countOut + 1))
+
+   for i in 1 2 3 4; do
+    if [ ! "$(docker ps -q -f name=noddi$i)" ]; then
+     availableSlot=$i
+     freeContainer=noddi$i
+     if [[ "$debug" -eq "1" ]]; then 
+      echo $freeContainer is available
+     fi
+     echo $i > $availContainerFn
+     breakOut=1
+     return
+    else
+     if [[ "$debug" -eq "1" ]]; then 
+      echo slot $availableSlot is unavailable
+     fi
+    fi
+   done
+
+   if [ "$countOut" -ge "$maxCountOut" ]; then
+     echo "0" > $availContainerFn
+     echo timed out waiting for available container
+     breakOut=1
+     return
+   fi
+
+   sleep $sleepTime
+  done
+}
+
+# ------------MAIN---------
+
+find_available_container

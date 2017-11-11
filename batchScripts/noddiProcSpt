@@ -1,0 +1,91 @@
+#!/bin/sh
+
+# Run a single noddi process in two steps
+#  1. prepare data inputs outside the container
+#  2. launch the noddi process in the container
+#
+# -Inputs
+#  dti_topup_eddy.nii.gz - topup and eddy current corrected
+#  mask_mask.nii.gz      - binary brain mask
+#  bvals.1D              - bvals file
+#  bvecs.1D              - bvecs file
+# -Outputs
+#   noddi maps
+#  
+# Robert Bussell, RGB
+#
+# Change log
+#171110 RGB mods for production mode
+
+
+get_container_name() {
+ #get a free container name
+ # by design, this does not return until it finds
+ # an available container or times out
+ sleep 30 # slow down for proc start
+ freeContainerTempFn=availNoddiContainer.$$
+ $NODDI_PATH/batchScripts/noddi_findFreeContainer $freeContainerTempFn
+ read contNum < $freeContainerTempFn
+ rm  $freeContainerTempFn
+
+ if [[ "$contNum" -eq "0" ]]; then
+  echo could not find a free container. exiting. 
+  exit 
+ fi
+ contName=noddi$contNum
+ echo using container $contName
+}
+
+proc_one_noddi() {
+
+mkdir -p $outDir
+echo "cd $outDir"
+cd $outDir
+
+
+bvalsFn=bvals.1D
+bvecsFn=bvecs.1D
+studyDir=Study01
+subjectDir=Subject01
+maskFn=mask_mask.nii.gz
+
+#copy the input files to current dir
+echo $sptMsg copying in dti, mask, bvals and bvecs files from $preDir/$dtiDir
+cp $preDir/$dtiDir/$dtiFn . 
+cp $preDir/$dtiDir/$maskFn .
+cp $preDir/$dtiDir/$bvalsFn .
+cp $preDir/$dtiDir/$bvecsFn .
+
+$preProcCmd $dtiFn $studyDir $studyDir/$subjectDir $bvalsFn $bvecsFn $maskFn $maskFn 
+echo $sptMsg preproc finished
+
+echo $sptMsg will get container name now
+get_container_name
+
+echo $sptMsg will launch noddi container now
+echo noddiCmd $contName
+$noddiCmd $contName & #careful here
+
+}
+
+sptMsg="script $0: "
+echo "$sptMsg called"
+sptMsg=`basename $0`":"
+
+#preDir=/rpool/home/rbussell/data/ImmunoImaging/
+#subNum=SZ002
+#dtiDir=HCP/
+#outDir=/rpool/home/rbussell/data/171110_eyler_immuno_noddi_reproc/$subNum
+#dtiFn=dti_topup_eddy.nii.gz
+#maskFn=mask_mask.nii.gz
+
+preDir=$1
+dtiDir=$2
+outDir=$3
+dtiFn=$4
+maskFn=$5
+
+preProcCmd=$NODDI_PATH/noddi_setupData
+noddiCmd=$NODDI_PATH/noddi_runContainer
+
+proc_one_noddi $procDir
