@@ -20,6 +20,7 @@ docker run --name $containerName \
 --rm -v $hostCurDir/:$contDataDir \
 -e LOCAL_USER_ID=`id -u $USER` \
 -e LOCAL_USER_NAME=`id -un $USER` \
+-e LOCAL_GROUP_NAME=`id -g $USER` \
 noddi:latest
 
 #docker run -it --name container1 --rm -v /home/rbussell/data/noddidata/:/home/cfmriguest/data noddi

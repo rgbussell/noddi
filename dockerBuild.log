@@ -1,181 +1,36 @@
-noddi_buildNoddiContainer: called...
-noddi_buildNoddiContainer:  log file is dockerBuild.log
-noddi_buildNoddiContainer:  building a processing environment for noddi...
-Sending build context to Docker daemon 34.65 MB
+./noddi_buildNoddiContainer: called...
+./noddi_buildNoddiContainer:  log file is dockerBuild.log
+./noddi_buildNoddiContainer:  building a processing environment for noddi...
+Sending build context to Docker daemon 557.1 kBSending build context to Docker daemon 1.114 MBSending build context to Docker daemon 1.671 MBSending build context to Docker daemon 2.228 MBSending build context to Docker daemon 2.785 MBSending build context to Docker daemon 3.342 MBSending build context to Docker daemon 3.899 MBSending build context to Docker daemon 4.456 MBSending build context to Docker daemon 5.014 MBSending build context to Docker daemon 5.571 MBSending build context to Docker daemon 6.128 MBSending build context to Docker daemon 6.685 MBSending build context to Docker daemon 7.242 MBSending build context to Docker daemon 7.799 MBSending build context to Docker daemon 8.356 MBSending build context to Docker daemon 8.913 MBSending build context to Docker daemon  9.47 MBSending build context to Docker daemon 10.03 MBSending build context to Docker daemon 10.58 MBSending build context to Docker daemon 11.14 MBSending build context to Docker daemon  11.7 MBSending build context to Docker daemon 12.26 MBSending build context to Docker daemon 12.81 MBSending build context to Docker daemon 13.37 MBSending build context to Docker daemon 13.93 MBSending build context to Docker daemon 14.48 MBSending build context to Docker daemon 15.04 MBSending build context to Docker daemon  15.6 MBSending build context to Docker daemon 16.15 MBSending build context to Docker daemon 16.71 MBSending build context to Docker daemon 17.27 MBSending build context to Docker daemon 17.83 MBSending build context to Docker daemon 18.38 MBSending build context to Docker daemon 18.94 MBSending build context to Docker daemon  19.5 MBSending build context to Docker daemon 20.05 MBSending build context to Docker daemon 20.61 MBSending build context to Docker daemon 21.17 MBSending build context to Docker daemon 21.73 MBSending build context to Docker daemon 22.28 MBSending build context to Docker daemon 22.84 MBSending build context to Docker daemon  23.4 MBSending build context to Docker daemon 23.95 MBSending build context to Docker daemon 24.51 MBSending build context to Docker daemon 25.07 MBSending build context to Docker daemon 25.62 MBSending build context to Docker daemon 26.18 MBSending build context to Docker daemon 26.74 MBSending build context to Docker daemon  27.3 MBSending build context to Docker daemon 27.85 MBSending build context to Docker daemon 28.41 MBSending build context to Docker daemon 28.97 MBSending build context to Docker daemon 29.52 MBSending build context to Docker daemon 30.08 MBSending build context to Docker daemon 30.64 MBSending build context to Docker daemon  31.2 MBSending build context to Docker daemon 31.75 MBSending build context to Docker daemon 32.31 MBSending build context to Docker daemon 32.87 MBSending build context to Docker daemon 33.42 MBSending build context to Docker daemon 33.98 MBSending build context to Docker daemon 34.47 MB
 Step 1/11 : FROM rgbussell/noddi_base
-latest: Pulling from rgbussell/noddi_base
-8ad8b3f87b37: Pulling fs layer
-746b2c28704b: Pulling fs layer
-dfedc82375ce: Pulling fs layer
-e9a0904e4f64: Pulling fs layer
-1603ac80f099: Pulling fs layer
-6c0cf2a2f0c4: Pulling fs layer
-b14fe9fa7d26: Pulling fs layer
-939f90f038c4: Pulling fs layer
-e7e3acb01e36: Pulling fs layer
-7825a12a96c6: Pulling fs layer
-de877996b6f7: Pulling fs layer
-3a3d6c6c149c: Pulling fs layer
-4b67868fb72d: Pulling fs layer
-266d5d2cda69: Pulling fs layer
-a2c6b84e5bda: Pulling fs layer
-1603ac80f099: Waiting
-6c0cf2a2f0c4: Waiting
-939f90f038c4: Waiting
-b14fe9fa7d26: Waiting
-e7e3acb01e36: Waiting
-7825a12a96c6: Waiting
-de877996b6f7: Waiting
-4b67868fb72d: Waiting
-e9a0904e4f64: Waiting
-7b3bd49e9680: Pulling fs layer
-c4a25f121235: Pulling fs layer
-b1ac035eb8f9: Pulling fs layer
-d7e42218c298: Pulling fs layer
-0eda22178448: Pulling fs layer
-35705331d4cf: Pulling fs layer
-c22a9fd60362: Pulling fs layer
-fcd9cca19519: Pulling fs layer
-46a82d6630d8: Pulling fs layer
-7b3bd49e9680: Waiting
-594d64189d00: Pulling fs layer
-90b0349efa43: Pulling fs layer
-cc2433673e4e: Pulling fs layer
-383761344524: Pulling fs layer
-040f44f95e31: Pulling fs layer
-c4a25f121235: Waiting
-e8ef9f67cd0e: Pulling fs layer
-e9afa9ca5bfc: Pulling fs layer
-fcd9cca19519: Waiting
-b1ac035eb8f9: Waiting
-cc2433673e4e: Waiting
-383761344524: Waiting
-90b0349efa43: Waiting
-d7e42218c298: Waiting
-46a82d6630d8: Waiting
-e8ef9f67cd0e: Waiting
-e9afa9ca5bfc: Waiting
-040f44f95e31: Waiting
-35705331d4cf: Waiting
-0eda22178448: Waiting
-c22a9fd60362: Waiting
-594d64189d00: Waiting
-dfedc82375ce: Download complete
-8ad8b3f87b37: Verifying Checksum
-8ad8b3f87b37: Download complete
-1603ac80f099: Verifying Checksum
-1603ac80f099: Download complete
-746b2c28704b: Verifying Checksum
-746b2c28704b: Download complete
-b14fe9fa7d26: Download complete
-e9a0904e4f64: Download complete
-939f90f038c4: Verifying Checksum
-939f90f038c4: Download complete
-7825a12a96c6: Verifying Checksum
-7825a12a96c6: Download complete
-3a3d6c6c149c: Download complete
-e7e3acb01e36: Verifying Checksum
-e7e3acb01e36: Download complete
-4b67868fb72d: Verifying Checksum
-4b67868fb72d: Download complete
-266d5d2cda69: Verifying Checksum
-266d5d2cda69: Download complete
-a2c6b84e5bda: Verifying Checksum
-a2c6b84e5bda: Download complete
-7b3bd49e9680: Download complete
-c4a25f121235: Download complete
-b1ac035eb8f9: Verifying Checksum
-0eda22178448: Verifying Checksum
-0eda22178448: Download complete
-d7e42218c298: Verifying Checksum
-d7e42218c298: Download complete
-35705331d4cf: Verifying Checksum
-35705331d4cf: Download complete
-fcd9cca19519: Verifying Checksum
-fcd9cca19519: Download complete
-46a82d6630d8: Verifying Checksum
-46a82d6630d8: Download complete
-c22a9fd60362: Download complete
-90b0349efa43: Download complete
-594d64189d00: Verifying Checksum
-594d64189d00: Download complete
-383761344524: Verifying Checksum
-383761344524: Download complete
-040f44f95e31: Verifying Checksum
-040f44f95e31: Download complete
-e8ef9f67cd0e: Verifying Checksum
-e8ef9f67cd0e: Download complete
-de877996b6f7: Verifying Checksum
-de877996b6f7: Download complete
-cc2433673e4e: Verifying Checksum
-cc2433673e4e: Download complete
-e9afa9ca5bfc: Verifying Checksum
-e9afa9ca5bfc: Download complete
-8ad8b3f87b37: Pull complete
-746b2c28704b: Pull complete
-dfedc82375ce: Pull complete
-e9a0904e4f64: Pull complete
-1603ac80f099: Pull complete
-6c0cf2a2f0c4: Pull complete
-b14fe9fa7d26: Pull complete
-939f90f038c4: Pull complete
-e7e3acb01e36: Pull complete
-7825a12a96c6: Pull complete
-de877996b6f7: Pull complete
-3a3d6c6c149c: Pull complete
-4b67868fb72d: Pull complete
-266d5d2cda69: Pull complete
-a2c6b84e5bda: Pull complete
-7b3bd49e9680: Pull complete
-c4a25f121235: Pull complete
-b1ac035eb8f9: Pull complete
-d7e42218c298: Pull complete
-0eda22178448: Pull complete
-35705331d4cf: Pull complete
-c22a9fd60362: Pull complete
-fcd9cca19519: Pull complete
-46a82d6630d8: Pull complete
-594d64189d00: Pull complete
-90b0349efa43: Pull complete
-cc2433673e4e: Pull complete
-383761344524: Pull complete
-040f44f95e31: Pull complete
-e8ef9f67cd0e: Pull complete
-e9afa9ca5bfc: Pull complete
-Digest: sha256:76e5655dd4d33826196a91b96f1ded762078ed97e6963e6fffe6a5f8e27383fa
-Status: Downloaded newer image for rgbussell/noddi_base:latest
  ---> 7980515045c5
 Step 2/11 : COPY setupFslEnv /usr/local/bin/
- ---> ea8f5bb2eea7
-Removing intermediate container 5ba0267955f6
+ ---> Using cache
+ ---> e04e372e6a26
 Step 3/11 : RUN chmod a+x /usr/local/bin/setupFslEnv
- ---> Running in d329144647d0
- ---> 2888ec1adde2
-Removing intermediate container d329144647d0
+ ---> Using cache
+ ---> fcea97f276ac
 Step 4/11 : ENV NODDI_PATH /usr/local/bin/noddi/
- ---> Running in 58d2b11b32a1
- ---> 7dc1a49fd90e
-Removing intermediate container 58d2b11b32a1
+ ---> Using cache
+ ---> fc6e50c301cd
 Step 5/11 : ENV PATH $NODDI_PATH/:${PATH}
- ---> Running in 171514e532ba
- ---> 26266d0deda0
-Removing intermediate container 171514e532ba
+ ---> Using cache
+ ---> b2127b71b5e3
 Step 6/11 : COPY ./noddi_* $NODDI_PATH
- ---> f5856efcfadf
-Removing intermediate container 79728df565b5
+ ---> Using cache
+ ---> a6eb135d3c5e
 Step 7/11 : RUN chmod a+wx $NODDI_PATH/*
- ---> Running in aca5e09fb7a0
- ---> c3c21aa8c901
-Removing intermediate container aca5e09fb7a0
+ ---> Using cache
+ ---> 7f9ddad1dc35
 Step 8/11 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
- ---> 3cb9451d978e
-Removing intermediate container b2636fb5e91c
+ ---> 5759a32df4f6
+Removing intermediate container acf5bfd22bcb
 Step 9/11 : RUN chmod u+x /usr/local/bin/entrypoint.sh
- ---> Running in d9629546d857
- ---> f4fed131fd1a
-Removing intermediate container d9629546d857
+ ---> Running in dde2a5910d72
+ ---> b6d30347896d
+Removing intermediate container dde2a5910d72
 Step 10/11 : RUN more /usr/local/bin/entrypoint.sh
- ---> Running in a5c60b5630bf
+ ---> Running in 9b18c6cbf833
 ::::::::::::::
 /usr/local/bin/entrypoint.sh
 ::::::::::::::
@@ -193,9 +48,15 @@ USER_ID=${LOCAL_USER_ID:-9001}
 
 USER_NAME=${LOCAL_USER_NAME:user}
 
-echo "$sptMsg Starting with UID : $USER_ID"
+USER_GID=${LOCAL_USER_GID:1000}
 
-useradd --shell /bin/tcsh -u $USER_ID -o -c "" -m $USER_NAME
+USER_GID=20
+
+echo "$sptMsg Starting with UID : $USER_ID"
+echo "$sptMsg Starting with GID : $USER_GID"
+
+useradd --shell /bin/tcsh -u $USER_ID -G $USER_GID -o -c "" -m $USER_NAME
+
 export HOME=/home/$USER_NAME
 
 chown $USER_NAME /home/$USER_NAME
@@ -204,8 +65,9 @@ cd $HOME/data
 
 if [[ -d "Study01" ]]; then
 chown $USER_NAME . -R
-#exec /usr/local/bin/gosu $USER_NAME /bin/bash
-exec /usr/local/bin/gosu $USER_NAME noddi_main
+chgrp $USER_GID . -R
+exec /usr/local/bin/gosu $USER_NAME /bin/bash
+#exec /usr/local/bin/gosu $USER_NAME noddi_main
 else
 echo this does not look like a noddi data dir -- container exiting
 exit
@@ -222,10 +84,11 @@ exit
 #adduser pipelineuser sudo
 #echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 #su -m r -c /home/noddiuser/script.sh
- ---> f633cc0a73a0
-Removing intermediate container a5c60b5630bf
+ ---> 9e691fe3a2d9
+Removing intermediate container 9b18c6cbf833
 Step 11/11 : ENTRYPOINT /usr/local/bin/entrypoint.sh
- ---> Running in c93335598bce
- ---> c0d5bd6cadeb
-Removing intermediate container c93335598bce
-Successfully built c0d5bd6cadeb
+ ---> Running in c7cd73a92c33
+ ---> fc9472116276
+Removing intermediate container c7cd73a92c33
+Successfully built fc9472116276
+Successfully tagged noddi:latest

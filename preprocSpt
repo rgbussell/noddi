@@ -1,0 +1,26 @@
+#!/bin/sh
+
+preProcCmd=$NODDI_PATH/noddi_setupData
+
+preDir=/rpool/home/rbussell/data/ImmunoImaging/noddiPreproc_tmp/ImmunoImaging/SZ009
+dtiDir=HCP
+outDir=/rpool/home/rbussell/data/ImmunoImaging/noddiPreproc_tmp
+dtiFn=dti_topup_eddy.nii.gz
+maskFn=mask_mask.nii.gz
+
+bvalsFn=bvals.1D
+bvecsFn=bvecs.1D
+studyDir=Study01
+subjectDir=Subject01
+maskFn=mask_mask.nii.gz
+
+#copy the input files to current dir
+$sptMsg copying in dti, mask, bvals and bvecs files from $preDir/$dtiDir
+cp $preDir/$dtiDir/$dtiFn . 
+cp $preDir/$dtiDir/$maskFn .
+cp $preDir/$dtiDir/$bvalsFn .
+cp $preDir/$dtiDir/$bvecsFn .
+
+$preProcCmd $dtiFn $studyDir $studyDir/$subjectDir $bvalsFn $bvecsFn $maskFn $maskFn
+echo $sptMsg preproc finished
+

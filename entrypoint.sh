@@ -12,9 +12,15 @@ USER_ID=${LOCAL_USER_ID:-9001}
 
 USER_NAME=${LOCAL_USER_NAME:user}
 
-echo "$sptMsg Starting with UID : $USER_ID"
+USER_GID=${LOCAL_USER_GID:1000}
 
-useradd --shell /bin/tcsh -u $USER_ID -o -c "" -m $USER_NAME
+#USER_GID=20
+
+echo "$sptMsg Starting with UID : $USER_ID"
+echo "$sptMsg Starting with GID : $USER_GID"
+
+useradd --shell /bin/tcsh -u $USER_ID -G $USER_GID -o -c "" -m $USER_NAME
+
 export HOME=/home/$USER_NAME
 
 chown $USER_NAME /home/$USER_NAME
@@ -23,8 +29,9 @@ cd $HOME/data
 
 if [[ -d "Study01" ]]; then
 chown $USER_NAME . -R
-#exec /usr/local/bin/gosu $USER_NAME /bin/bash
-exec /usr/local/bin/gosu $USER_NAME noddi_main
+chgrp $USER_GID . -R
+exec /usr/local/bin/gosu $USER_NAME /bin/bash
+#exec /usr/local/bin/gosu $USER_NAME noddi_main
 else
 echo this does not look like a noddi data dir -- container exiting
 exit
