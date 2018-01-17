@@ -1,0 +1,70 @@
+#!/bin/tcsh
+echo ""
+echo ""
+echo ""
+echo -n "What is the path to the directory containing your subjects?  "
+set PATH = ( $< )
+echo ""
+echo -n "What is the subject ID?  (ex: SZ002)  "
+set ID  = ( $< )
+echo ""
+echo ""
+####### Adding symbolic link to the /usr/local/freesurfer/subjects directory (expected) for recon-all
+ln -s ${PATH}/Sub_${ID} /usr/local/freesurfer/subjects/Sub_${ID}
+
+####### Running recon-all process
+
+#recon-all -i ${PATH}/Sub_${ID}/MPRAGE/*CFMRI.1 -subjid ${PATH}/Sub_${ID}/T1_SegFS -all -sd ${PATH}/Sub_${ID}
+
+####### 
+#cd ${PATH}/Sub_${ID}/T1_SegFS/mri
+
+#foreach MGZ (aparc.a2009s+aseg aparc+aseg aseg.auto aseg.auto_noCCseg aseg brain.finalsurfs brainmask.auto brainmask brain ctrl_pts filled lh.ribbon norm nu nu_noneck orig orig_nu rawavg rh.ribbon       ribbon  T1      wm.asegedit     wm      wmparc  wm.seg)
+#       mri_convert ${MGZ}.mgz ${MGZ}.nii
+#        gzip ${MGZ}.nii
+#end
+
+
+#mkdir mri_nifti_seg
+
+#mv *.nii.gz mri_nifti_seg
+
+#mv mri_nifti_seg ${PATH}/Sub_${ID}/T1_SegFS
+
+cd ${PATH}/Sub_${ID}/DTI
+
+mv dti* dti_${ID}_eddy.nii.gz
+
+mkdir ${PATH}/Sub_${ID}/DTI/dti2t1_reg_params
+
+####### Adding symbolic links to the "mri" and "surf" directories so that they are in the main subject directory (expected) for bbregister
+ln -s ${PATH}/Sub_${ID}/T1_SegFS/mri ${PATH}/Sub_${ID}/mri
+ln -s ${PATH}/Sub_${ID}/T1_SegFS/surf ${PATH}/Sub_${ID}/surf
+
+bbregister --s Sub_${ID} --mov ${PATH}/Sub_${ID}/DTI/dti_${ID}_eddy.nii.gz --reg ${PATH}/Sub_${ID}/DTI/dti2t1_reg_params/dti_${ID}_eddy.dat --dti --o ${PATH}/Sub_${ID}/DTI/dti_${ID}_eddy_resamp.nii.gz --init-fsl
+
+
+mkdir ${PATH}/Sub_${ID}/REG_CHECK
+
+
+ln -s ${PATH}/Sub_${ID}/DTI/dti_${ID}_eddy.nii.gz ${PATH}/Sub_${ID}/REG_CHECK/dti_${ID}_eddy.nii.gz
+
+ln -s ${PATH}/Sub_${ID}/DTI/dti_${ID}_eddy_resamp.nii.gz ${PATH}/Sub_${ID}/REG_CHECK/dti_${ID}_eddy_resamp.nii.gz
+
+ln -s ${PATH}/Sub_${ID}/T1_SegFS/mri/x_nifti_segmentations/orig.nii.gz ${PATH}/Sub_${ID}/REG_CHECK/orig.nii.gz
+
+mkdir ${PATH}/Sub_${ID}/NODDI/NODDI_Registered
+mkdir ${PATH}/Sub_${ID}/NODDI/NODDI_Registered/Reg_Files
+
+foreach NODTYPE ( FIT_dir FIT_ICVF FIT_ISOVF FIT_OD )
+        mri_vol2vol --mov ${PATH}/Sub_${ID}/NODDI/${NODTYPE}.nii.gz --targ ${PATH}/Sub_${ID}/REG_CHECK/orig.nii.gz --interp nearest --o ${PATH}/Sub_${ID}/NODDI/${NODTYPE}_Reg2DTI.nii.gz --reg ${PATH}/Sub_${ID}/DTI/dti2t1_reg_params/dti_${ID}_eddy.dat
+        cd ${PATH}/Sub_${ID}/NODDI
+        mv *Reg2DTI* ${PATH}/Sub_${ID}/NODDI/NODDI_Registered
+        cd ${PATH}/Sub_${ID}/NODDI/NODDI_Registered
+        mv *.reg Reg_Files
+        mv *.lta Reg_Files
+        cd ${PATH}/Sub_${ID}
+        ln -s ${PATH}/Sub_${ID}/NODDI/NODDI_Registered/${NODTYPE}_Reg2DTI.nii.gz ${PATH}/Sub_${ID}/REG_CHECK/${NODTYPE}_Reg2DTI.nii.gz
+
+end
+
