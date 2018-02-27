@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#Get rid of non-printable chars in text files
+#Sometimes these end up in the bvecs and bvars files
+#Note, this will overwrite the file
+#
+#RGB 180227
+
+inFn=$1
+
+sed 's/[^[:blank:][:print:]]/\n/g' $inFn \
+| grep -v "^$" > "$inFn".$$
+
+mv "$inFn".$$ $inFn

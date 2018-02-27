@@ -1,0 +1,62 @@
+#!/bin/sh
+
+$NODDI_PATH/noddi_fixBFiles bvals
+$NODDI_PATH/noddi_fixBFiles bvals
+
+subNumPrefix=TBI_
+subNums=`ls *gz | cut -c5-7 | sort -n | uniq`
+rawDir=/rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data
+
+dtiFn=dti_topup_eddy.nii.gz
+maskFn=mask_mask.nii.gz
+bvalsFn=bvals.1D
+bvecsFn=bvecs.1D
+studyDir=Study01
+subjectDir=Subject01
+maskFn=mask_mask.nii.gz
+
+mkdir $subNumPrefix
+dtiDir=dti
+
+for subNum in $subNums
+do
+ cd $rawDir
+ echo $subNum
+ subDtiDir=$subNumPrefix$subNum/$dtiDir
+ mkdir -p $subDtiDir
+ cp "$subNumPrefix$subNum"_*.nii.gz $subDtiDir/$dtiFn
+ cp bvecs $subDtiDir/bvecs.1D
+ cp bvals $subDtiDir/bvals.1D
+ cd $subDtiDir
+ #bet $dtiFn mask -m -f 0.2
+done
+
+topDir=$rawDir
+
+preProcCmd=/rpool/home/rbussell/repos/noddi/noddi_setupData
+noddiCmd=/rpool/home/rbussell/repos/noddi/noddi_runContainer
+
+
+for subNum in $subNums
+do
+echo preprocessing sub $subNum for noddi analysis
+cd $topDir
+cd $subNumPrefix$subNum/$dtiDir
+$preProcCmd dti_topup_eddy.nii.gz Study01 Study01/Subject01 bvals.1D bvecs.1D mask_mask.nii.gz mask_mask.nii.gz
+$noddiCmd
+cd $topDir
+done
+
+docker run -it --name noddi1 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_198/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi2 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_201/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi3 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_204/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi4 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_205/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi5 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_207/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi6 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_209/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi7 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_214/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+#ABOVE THIS LINE ALREADY RUNNING ON FMRI1----------
+docker run -it --name noddi8 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_222/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi9 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_227/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+docker run -it --name noddi10 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_235/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+
+#docker run -it --name noddi198 --rm -v /rpool/home/rbussell/data/noddi/ScottSorgLisaDW/NODDI_pilot_data/TBI_198/dti/:/home/cfmriguest/data/ noddi:v1.0
