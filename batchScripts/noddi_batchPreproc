@@ -1,0 +1,84 @@
+#!/bin/sh
+
+#do noddi preprocessing in batch mode
+#
+#170115 RGB: Look for all files in rawDir with correct sub prefix and data dir
+
+#study conventions
+dtiDir=HCP
+rawDir=/rpool/home/rbussell/data/ImmunoImaging
+subnumPrefix=SZ
+
+#pipeline conventions
+dtiFn=dti_topup_eddy.nii.gz
+maskFn=mask_mask.nii.gz
+bvalsFn=bvals.1D
+bvecsFn=bvecs.1D
+studyDir=Study01
+subjectDir=Subject01
+maskFn=mask_mask.nii.gz
+
+#error messaging
+sptMsg="echo `basename $0`:"
+
+#path
+preProcCmd=$NODDI_PATH/noddi_setupData
+
+getVar() {
+ curVarName=$1
+ grep "^"$curVarName conventionFile.txt | awk '{print $2}'
+}
+
+#dtiDir=`getVar dtiDir`
+#rawDir=`getVar rawDir`
+#subnumPrefix=`getVar subnumPrefix`
+
+#dtiFn=`getVar dtiFn`
+#maskFn=`getVar maskFn`
+#bvalsFn=`getVar bvalsFn`
+#bvecsFn=`getVar bvecsFn`
+#studyDir=`getVar studyDir`
+#subjectDir=`getVar subjectDir`
+#maskFn=`getVar maskFn`
+
+preprocOneSub() {
+ startDir=`pwd`
+ cd $destDir
+ #copy the input files to current dir
+ $sptMsg copying in dti, mask, bvals and bvecs files from $curDtiDir
+ cp $curDtiDir/$dtiFn $destDir
+ cp $curDtiDir/$maskFn $destDir
+ cp $curDtiDir/$bvalsFn $destDir
+ cp $curDtiDir/$bvecsFn $destDir
+
+ $preProcCmd $dtiFn $studyDir $studyDir/$subjectDir $bvalsFn $bvecsFn $maskFn $maskFn
+ echo $sptMsg preproc finished in dir $destDir
+
+ cd $startDir
+}
+
+#go to the study directory
+if [ ! -d "$rawDir" ]; then
+  $sptMsg FATAL ERROR: study dir does not exist. EXITING
+  exit
+fi
+
+cd $rawDir
+
+#find the target files
+$sptMsg looking for rawDir $rawDir
+$sptMsg looking for dtiDir $dtiDir and subnumPrefix $subnumPrefix
+
+preDirList=`ls -d "$rawDir"/"$subnumPrefix"*/"$dtiDir"`
+#$sptMsg found these data dirs: $preDirList
+
+nDirsFound=`echo $preDirList | wc -w`
+$sptMsg found $nDirsFound subjects with $dtiDir directories
+
+for curDtiDir in $preDirList
+do
+ $sptMsg processing $curDtiDir
+ destDir=$curDtiDir/../noddi
+ mkdir -p $destDir
+ preprocOneSub
+done

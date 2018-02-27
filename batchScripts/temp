@@ -1,0 +1,15 @@
+#!/bin/sh
+
+while read line
+do
+ varName=`echo $line | awk '{print $1}'`
+ echo $varName
+ varVal=`echo $line | awk '{print $2}'`
+ echo $varVal
+
+ "$varName"=$varVal
+done < immunoType.txt
+
+echo $dtiFn
+
+#awk '{print $1}' immunoType.txt

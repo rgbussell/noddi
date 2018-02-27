@@ -11,7 +11,7 @@ contDataDir=$contHome/data/
 containerName=$1
 
 case $containerName in
-	noddi1|noddi2|noddi3|noddi4) echo found valid container name $containerName;;
+	noddi1|noddi2|noddi3|noddi4|noddi5|noddi6|noddi7|noddi8) echo found valid container name $containerName;;
 	*) echo did not find a valid container name, exiting; exit;;
 esac
 
@@ -21,5 +21,7 @@ docker run --name $containerName \
 -e LOCAL_USER_ID=`id -u $USER` \
 -e LOCAL_USER_NAME=`id -un $USER` \
 noddi:latest
+
+#docker run -it --name noddi1002 --rm -v /rpool/home/rbussell/data/180209_ruth_noddi/1002/dti/:/home/rbussell/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0
 
 #docker run -it --name container1 --rm -v /home/rbussell/data/noddidata/:/home/cfmriguest/data noddi

@@ -1,0 +1,11 @@
+dtiDir HCP
+rawDir /rpool/home/rbussell/data/ImmunoImaging
+subnumPrefix SZ
+dtiFn dti_topup_eddy.nii.gz
+maskFn mask_mask.nii.gz
+bvalsFn bvals.1D
+bvecsFn bvecs.1D
+studyDir Study01
+subjectDir Subject01
+maskFn mask_mask.nii.gz
+
