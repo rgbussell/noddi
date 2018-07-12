@@ -1,25 +1,32 @@
 #!/bin/sh
 
 #This scripts is used to do the NODDI analysis on the Bruker data.
-# Input1: full path to where the nii image is
-# Input2: Output patha nd name
-# Input3: full path to where the raw Bruker data is
-# Example:  donoddi_bruker_v2 /rpool/home/maryam/data/noddi_bruker/gbrown/iTAT_1082/iTAT_1082_dti_reg.nii.gz ./outputs /rpool/home/maryam/data/noddi_bruker/gbrown/iTAT_1082.Ao1/10
+# Input1: full path to where Bruker data is located
+# Input2: Scan number
+# Input3: process number (directory under pdata where 2dseq is stored), put 1 
+# Input4: Name of the reconstructed image
+# Input5: Full path to the output directory
+
+# Example: the following command:
+#donoddi_bruker_v2 /rpool/home/maryam/data/noddi_bruker2/180706_palaPilot/rawdata/gb_noddiLPS180706.Oe2 8 1 dti1 /rpool/home/maryam/data/noddi_bruker2/180706_palaPilot/output
+#
+# Then in the terminal, type "noddi_main"
+# after the noddi processing is done, type "exit"
 
 topDir=`pwd`
 
 preProcCmd=/rpool/home/rbussell/repos/noddi/noddi_setupData
 noddiCmd="/rpool/home/rbussell/repos/noddi/noddi_runContainer noddi1"
 
-scanName=$1
-outDir=$2
-brukerDir=$3
+brukerDir=$1 
+scanNum=$2
+procNum=$3
+prefix=$4
+outBrikDir=$5
 
-#for dirName in $topDir/iTAT*; do
-#[ -d $dirName ] && cd "$dirName"
+scanName="$prefix.nii.gz"
+outDir=$outBrikDir
 
-#cd $topDir
-#cd $dirName
 
 mkdir -p $outDir
 cd $outDir
@@ -27,46 +34,70 @@ cd $outDir
 currentDir=`pwd`
 echo "Current working directory is: $currentDir"
 
-if [ -d "Study01" ]
+echo "*************************************************************************************************"
+echo "***************************** Starting the reconstruction in Matlab *****************************"
+echo "*************************************************************************************************"
+
+/usr/local/bin/matlab -nodesktop -nosplash -nodisplay -r "addpath('/rpool/apps/matlabcode/noddi/'); addpath(genpath('/rpool/home/maryam/bitbucket_proj/process7t/')); addpath('/rpool/apps/AFNI/afni_matlab/matlab/'); noddi_MakeDWIBrikFromBruker('$brukerDir', $scanNum ,  $procNum  , '$prefix', '$outBrikDir'); exit"
+
+
+if ! [[ -f $scanName ]]
 then
-echo "This subject has already been processed*****************"
+
+	echo "Reconstruction Failed!!"
 
 else
 
-if ! [[ -f bvals_multi.txt && -f bvecs_multi.txt ]]
-then
+	echo "*******************************************************"
+	echo "Done with the reconstruction****************************"
+	echo "*******************************************************"
 
-	echo "Generating the bvec and bvals..........."
-    /apps/matlabcode/noddi/noddi_getBVecsBruker $brukerDir > bvecs
+	if [ -d "Study01" ]
+	then
+		echo "This subject has already been processed*****************"
 
-    /apps/matlabcode/noddi/noddi_getBValsBruker $brukerDir > bvals
+	else
 
-    /apps/matlabcode/noddi/noddi_makeMultiShellBvalsBvecs bvecs bvals 5 2 1000 2000
-fi
+		if ! [[ -f bvals_multi.txt && -f bvecs_multi.txt ]]
+		then
 
-if ! [[ -f brain_roi.nii.gz && -f brain_mask.nii.gz ]]
-then
-    echo "Generating the mask**************************"
-    /apps/matlabcode/noddi/noddi_makeMaskMouse $scanName 5 20
-fi
+			echo "Generating the bvec and bvals..........."
+    			/apps/matlabcode/noddi/noddi_getBVecsBruker $brukerDir/$scanNum > bvecs
+
+    			/apps/matlabcode/noddi/noddi_getBValsBruker $brukerDir/$scanNum > bvals
+
+    			/apps/matlabcode/noddi/noddi_makeMultiShellBvalsBvecs bvecs bvals 5 3 750 1500 2000
+		fi
+
+		if ! [[ -f brain_roi.nii.gz && -f brain_mask.nii.gz ]]
+		then
+    			echo "Generating the mask**************************"
+    			/apps/matlabcode/noddi/noddi_makeMaskMouse $scanName 5 20
+		fi
 
 
-if [[ -f brain_mask.nii.gz && -f bvals_multi.txt && -f bvecs_multi.txt && -f $scanName ]]; 
-then
-#	echo "Removing the existing Study01 directory..."
-#	rm -r Study01
+		if [[ -f brain_mask.nii.gz && -f bvals_multi.txt && -f bvecs_multi.txt && -f $scanName ]]; 
+		then
 
-	$preProcCmd $scanName Study01 Study01/Subject01 bvals_multi.txt bvecs_multi.txt brain_mask.nii.gz brain_roi.nii.gz
-	echo "Setup is complete ****"
+			$preProcCmd $scanName Study01 Study01/Subject01 bvals_multi.txt bvecs_multi.txt brain_mask.nii.gz brain_roi.nii.gz
+			echo "Setup is complete ****"
 
-	echo "Running NODDI analysis........"
-	$noddiCmd
-	echo "NODDI analysis is complete for $currentDir +++++++++++++++++++++"
-	echo "-----------------------------------------------------------------"
-else
-	echo "Missing some files for $currentDir.... Skipping the NODDI analysis!!!! "
-fi
-fi
+			echo "Running NODDI analysis........"
+			#	$noddiCmd
+
+			docker run -it --name noddi1 --rm -v `pwd`/:/home/maryam/data/ -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=`id -un $USER` noddi:v1.0 noddi_main
+
+
+			echo "NODDI analysis is complete for $currentDir +++++++++++++++++++++"
+			echo "-----------------------------------------------------------------"
+		else
+			echo "Missing some files for $currentDir.... Skipping the NODDI analysis!!!! "
+		fi
+	fi
+fi 
 
 cd $topDir
-#done
+
+
+
+
