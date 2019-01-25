@@ -90,7 +90,8 @@ class Evaluation :
         print '\t* DWI signal...'
         self.set_config('dwi_filename', dwi_filename)
         self.niiDWI  = nibabel.load( pjoin( self.get_config('DATA_path'), dwi_filename) )
-        self.niiDWI_img = self.niiDWI.get_data().astype(np.float32)
+        self.niiDWI_img = self.niiDWI.get_data()
+        #self.niiDWI_img = self.niiDWI.get_data().astype(np.float32)
         hdr = self.niiDWI.header if nibabel.__version__ >= '2.0.0' else self.niiDWI.get_header()
         self.set_config('dim', self.niiDWI_img.shape[:3])
         self.set_config('pixdim', tuple( hdr.get_zooms()[:3] ))

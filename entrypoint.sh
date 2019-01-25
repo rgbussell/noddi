@@ -14,6 +14,10 @@ USER_NAME=${LOCAL_USER_NAME:user}
 
 echo "$sptMsg Starting with UID : $USER_ID"
 
+if [[ "$SYS_TYPE" == "AWS" ]]; then
+  echo this is an AWS system
+fi
+
 useradd --shell /bin/tcsh -u $USER_ID -o -c "" -m $USER_NAME
 export HOME=/home/$USER_NAME
 
