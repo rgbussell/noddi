@@ -1,67 +1,16 @@
---Multi-subject NODDI--
-noddiPreprocScript <-- run this first to generate input files
-procAllSubjects <-- called by noddiPreprocScript
-procOneSubject <-- called by procAllSubjects
+# NODDI procesing and analysis pipeline
 
-runNoddiAmicoScriptAll <--run this after noddiPreprocScript
-noddiAmicoScript <-- Called by runNoddiAmicoScriptAll
+## This repo: A containerized version of AMICO/NODDI, an MRI image analysis method for estimating the angular dispersion of cells in brain tissue, among other things.
 
------------------------
+This repo contains a more user-friendly implementation that wraps all code dependencies into a container. Those include non-standard Python libraries, linear algebra libraries in C, the NODDI code itself, and other things. Because this installation is encoded in the docker container, you do not have to do this yourself.
 
-For multi-subject study, set up input data in numbered directories below the level from which you call the scripts. See example directory structure below:
+The code should run on linux systems and Mac OSX that have docker installed and running.
 
-├── 1
-│   ├── kent1_eddy.nii.gz
-│   ├── mask_mask.nii.gz
-│   └── mask.nii.gz
-├── 2
-│   ├── kent2_eddy.nii.gz
-│   ├── mask_mask.nii.gz
-│   └── mask.nii.gz
-├── 3
-│   ├── kent3_eddy.nii.gz
-│   ├── mask_mask.nii.gz
-│   └── mask.nii.gz
-├── bvals.1D
-├── bvecs.1D
-├── kent
-│   │   ├── Subject1
-│   │   ├── AMICO
-│   │   │   └── NODDI
-│   │   │       ├── config.pickle
-│   │   │       ├── FIT_dir.nii.gz
-│   │   │       ├── FIT_ICVF.nii.gz
-│   │   │       ├── FIT_ISOVF.nii.gz
-│   │   │       └── FIT_OD.nii.gz
-│   │   ├── brain_mask.hdr
-│   │   ├── brain_mask.img
-│   │   ├── NODDI_DWI.hdr
-│   │   ├── NODDI_DWI.img
-│   │   ├── NODDI_protocol.bval
-│   │   ├── NODDI_protocol.bvec
-│   │   ├── NODDI_protocol.scheme
-│   │   ├── roi_mask.hdr
-│   │   └── roi_mask.img
-│   ├── Subject2
-│   │   ├── brain_mask.hdr
-│   │   ├── brain_mask.img
-│   │   ├── NODDI_DWI.hdr
-│   │   ├── NODDI_DWI.img
-│   │   ├── NODDI_protocol.bval
-│   │   ├── NODDI_protocol.bvec
-│   │   ├── NODDI_protocol.scheme
-│   │   ├── roi_mask.hdr
-│   │   └── roi_mask.img
-│   ├── Subject3
-│   │   ├── brain_mask.hdr
-│   │   ├── brain_mask.img
-│   │   ├── NODDI_DWI.hdr
-│   │   ├── NODDI_DWI.img
-│   │   ├── NODDI_protocol.bval
-│   │   ├── NODDI_protocol.bvec
-│   │   ├── NODDI_protocol.scheme
-│   │   ├── roi_mask.hdr
-│   │   └── roi_mask.img
-|------------------------------
+##The core NODDI code in this repo is from D'Adduci, et.al.:
 
-33 directories, 291 files
+*Accelerated Microstructure Imaging via Convex Optimization (AMICO) from diffusion MRI data
+Alessandro Daducci, Erick J.Canales-Rodríguez, HuiZhang, Tim B.Dyrby, Daniel C.Alexander, Jean-Philippe Thiran
+https://doi.org/10.1016/j.neuroimage.2014.10.026*
+
+
+Contact: rgbussell@gmail.com
